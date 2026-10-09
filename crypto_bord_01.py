@@ -46,8 +46,13 @@ def open_modal():
     
     # Здесь можно добавить виджеты (кнопки, поля ввода и т.д.)
 
-    Label(frame_modal_w, text='   bitcoin', image=cryptos.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
-    Label(frame_modal_w, text='   ethereum', image=cryptos.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+    # Label(frame_modal_w, text='   bitcoin', image=cryptos.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+    # Label(frame_modal_w, text='   ethereum', image=cryptos.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+
+    # Создаем метки с изображением и названием криптовалюты
+    for i, key in enumerate(cryptos):
+        Label(frame_modal_w, text=f"  {key}", image=cryptos.get(key), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=5, pady=5, anchor="w") 
+
 
     Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).pack()
     
