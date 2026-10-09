@@ -1,4 +1,5 @@
 from tkinter import*
+from PIL import Image, ImageTk, ImageGrab
 
 def settings_open():
     pass
@@ -35,6 +36,7 @@ def show_menu(event):
 
 def open_modal():
     # Создаём дочернее модальное окно с настройками
+    global cryptos
     modal_window = Toplevel(root)
     modal_window.title("Модальное окно")
     modal_window.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
@@ -43,6 +45,10 @@ def open_modal():
     frame_modal_w.pack(fill="x", padx=10, pady=5)
     
     # Здесь можно добавить виджеты (кнопки, поля ввода и т.д.)
+
+    Label(frame_modal_w, text='   bitcoin', image=cryptos.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+    Label(frame_modal_w, text='   ethereum', image=cryptos.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+
     Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).pack()
     
     # Настраиваем модальность
@@ -61,6 +67,16 @@ root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
 
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
+
+
+
+cryptos = {
+    "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
+    'ethereum' : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
+}
+
+# Label(frame_root, text='bitcoin', image=cryptos.get("bitcoin")).pack(padx=10)
+# Label(frame_root, text='ethereum', image=cryptos.get("ethereum")).pack(padx=10)
 
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
