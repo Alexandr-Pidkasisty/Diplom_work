@@ -38,8 +38,7 @@ def open_modal():
     # Создаём дочернее модальное окно с настройками
     global cryptos
     modal_window = Toplevel(root)
-    modal_window.title("Модальное окно")
-    modal_window.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
+    modal_window.title("Выбор криптовалют для отслеживания")
 
     frame_modal_w = Frame(modal_window, bg='light grey')
     frame_modal_w.pack(fill="x", padx=10, pady=5)
