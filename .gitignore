@@ -1,0 +1,10 @@
+*.[oa]
+*~
+*.log
+build/
+bin/
+*.docx
+*.png
+readme.*
+dist/
+.spec
