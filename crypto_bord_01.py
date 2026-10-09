@@ -49,12 +49,16 @@ def open_modal():
     # Label(frame_modal_w, text='   bitcoin', image=cryptos.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
     # Label(frame_modal_w, text='   ethereum', image=cryptos.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
 
-    # Создаем метки с изображением и названием криптовалюты
+    # Создаем метки с изображением и названием криптовалюты и чекбоксы для их выбора
     for i, key in enumerate(cryptos):
-        Label(frame_modal_w, text=f"  {key}", image=cryptos.get(key), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=5, pady=5, anchor="w") 
+        Label(frame_modal_w, text=f"  {key}", image=cryptos.get(key), compound=LEFT,
+              width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w") 
+        tmp_var = IntVar()
+        Checkbutton(frame_modal_w, variable=tmp_var).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
+        var_chb.append(tmp_var)
 
 
-    Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).pack()
+    Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(cryptos), column=1, padx=5, pady=5, sticky ="w")
     
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
@@ -74,11 +78,13 @@ frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
 
 
-
+# Перечень криптовалют с аватарками
 cryptos = {
     "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
     'ethereum' : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
 }
+
+var_chb = []  # Список индикаторных переменных для выбора отслеживаемых валют
 
 # Label(frame_root, text='bitcoin', image=cryptos.get("bitcoin")).pack(padx=10)
 # Label(frame_root, text='ethereum', image=cryptos.get("ethereum")).pack(padx=10)
