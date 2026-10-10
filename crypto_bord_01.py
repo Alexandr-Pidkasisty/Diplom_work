@@ -68,7 +68,7 @@ def open_modal():
 root_scr_size = [620, 520]          # начальный размер корневого окна
 menu_flag = True                    # флаг видимости рамки, строки заголовка и меню окна
 
-
+# Главное окно программы
 root = Tk()
 root.title("Курсы криптовалют")
 root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
@@ -76,22 +76,18 @@ root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
 
-
 # Перечень криптовалют с аватарками
 cryptos = {
     "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
     'ethereum' : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
 }
- # Список индикаторных переменных для выбора отслеживаемых валют. По умолчанию нули
+ # Список индикаторных переменных для выбора отслеживаемых валют
 var_chb = [IntVar() for _ in range(len(cryptos))]
-# print(var_chb)
-
-# Label(frame_root, text='bitcoin', image=cryptos.get("bitcoin")).pack(padx=10)
-# Label(frame_root, text='ethereum', image=cryptos.get("ethereum")).pack(padx=10)
 
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
 
+# Основное меню
 menu_bar = Menu(root)
 root.config(menu=menu_bar)
 
