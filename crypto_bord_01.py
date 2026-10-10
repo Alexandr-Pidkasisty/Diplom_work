@@ -57,12 +57,23 @@ def open_modal():
     
 
     Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(coins_ident), column=1, padx=5, pady=5, sticky ="w")
+
+    modal_window.protocol("WM_delete_WINDOW", lambda: print("modal_window is closing"))
   
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
     modal_window.grab_set()         # Захватываем ввод
     modal_window.focus_set()        # Переводим фокус на окно
     modal_window.wait_window()      # Ждём закрытия окна
+    create_labels()
+
+def my_callback():
+    print("Модальное окно закрыто! Выполняем действия...")
+    # Здесь — вызов другой функции из Tkinter
+    create_labels()
+
+
+
 
 def clear_frame_root():
     if frame_root.winfo_children():
@@ -123,6 +134,7 @@ root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
+# settings_menu.add_command(label="Справочник", command=lambda: open_modal(my_callback))
 settings_menu.add_command(label="Справочник", command=open_modal)
 # settings_menu.add_command(label="Сохранить", command=settings_save)
 # settings_menu.add_command(label="Удалить", command=settings_delete)
