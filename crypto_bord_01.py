@@ -73,13 +73,14 @@ def create_labels():
 
 # ********************************************************************************************************************
 
-root_scr_size = [620, 520]          # начальный размер корневого окна
+# root_scr_size = [620, 520]          # начальный размер корневого окна
 menu_flag = True                    # флаг видимости рамки, строки заголовка и меню окна
 
 # Главное окно программы
 root = Tk()
 root.title("Курсы криптовалют")
-root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
+# root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
+root.minsize(300, 150)
 
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
@@ -87,8 +88,9 @@ frame_root.pack(fill="x", padx=10, pady=5)
 # Перечень криптовалют с аватарками
 try:
     coins_ident = {
-        "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
-        "ethereum" : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
+        "Bitcoin BTC" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
+        "Ethereum ETH" : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30))),
+        "Tether USDT" : ImageTk.PhotoImage(Image.open("images/tether.webp").resize((30, 30)))
     }
 except FileNotFoundError:
     mb.showerror('Ошибка', 'Файлы с аватарами криптовалют не найдены')
@@ -97,8 +99,9 @@ except Exception as ex:
 
 # Перечень криптовалют с курсами
 coins_rate = {
-    "bitcoin" : "82,852.91",
-    "ethereum" : "2,496.02"
+    "Bitcoin BTC" : "82,852.91",
+    "Ethereum ETH" : "2,496.02",
+    "Tether USDT" : "0.9992"
 }
 
 # Список индикаторных переменных для выбора отслеживаемых валют
