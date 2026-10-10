@@ -96,7 +96,7 @@ root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
-settings_menu.add_command(label="Открыть", command=open_modal)
+settings_menu.add_command(label="Справочник", command=open_modal)
 # settings_menu.add_command(label="Сохранить", command=settings_save)
 # settings_menu.add_command(label="Удалить", command=settings_delete)
 # settings_menu.add_separator()
