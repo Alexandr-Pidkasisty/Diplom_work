@@ -73,7 +73,7 @@ def create_labels():
         if var_chb[i].get():
             Label(frame_root, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
                   width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w")
-            Label(frame_root, text=f"  {coins_rate.get(key)}", compound=LEFT,
+            Label(frame_root, text=f"  ${coins_rate.get(key)}", compound=LEFT,
                       width=40, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
 
 
