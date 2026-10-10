@@ -37,6 +37,7 @@ def show_menu(event):
 def open_modal():
     # Создаём дочернее модальное окно с настройками
     global cryptos
+    global var_chb
     modal_window = Toplevel(root)
     modal_window.title("Выбор криптовалют для отслеживания")
 
@@ -52,13 +53,12 @@ def open_modal():
     for i, key in enumerate(cryptos):
         Label(frame_modal_w, text=f"  {key}", image=cryptos.get(key), compound=LEFT,
               width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w") 
-        tmp_var = IntVar()
-        Checkbutton(frame_modal_w, variable=tmp_var).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
-        var_chb.append(tmp_var)
-
+        # tmp_var = IntVar()
+        Checkbutton(frame_modal_w, variable=var_chb[i]).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
+    
 
     Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(cryptos), column=1, padx=5, pady=5, sticky ="w")
-    
+  
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
     modal_window.grab_set()         # Захватываем ввод
@@ -82,8 +82,9 @@ cryptos = {
     "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
     'ethereum' : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
 }
-
-var_chb = []  # Список индикаторных переменных для выбора отслеживаемых валют
+ # Список индикаторных переменных для выбора отслеживаемых валют. По умолчанию нули
+var_chb = [IntVar() for _ in range(len(cryptos))]
+# print(var_chb)
 
 # Label(frame_root, text='bitcoin', image=cryptos.get("bitcoin")).pack(padx=10)
 # Label(frame_root, text='ethereum', image=cryptos.get("ethereum")).pack(padx=10)
@@ -101,5 +102,15 @@ settings_menu.add_command(label="Справочник", command=open_modal)
 # settings_menu.add_command(label="Удалить", command=settings_delete)
 # settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
+
+# Отладка
+# Кнопка для вывода значений
+# def print_values():
+#     values = [var.get() for var in var_chb]
+#     print(values)
+    
+# btn = Button(frame_root, text='Печать', command=print_values)
+# btn.grid(row=len(cryptos)+1, column=1)
+# Отладка
 
 root.mainloop()
