@@ -80,7 +80,7 @@ menu_flag = True                    # флаг видимости рамки, с
 root = Tk()
 root.title("Курсы криптовалют")
 # root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
-root.minsize(300, 150)
+root.minsize(300, 150)  # Задал минимальный размер окна
 
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
