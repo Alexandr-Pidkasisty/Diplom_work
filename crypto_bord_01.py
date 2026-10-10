@@ -30,18 +30,24 @@ def open_modal():
     global coins_ident
     global var_chb
     modal_window = Toplevel(root)
-    modal_window.title("Выбор криптовалют для отслеживания")
+    modal_window.title("Справочник криптовалют")
 
-    frame_modal_w = Frame(modal_window, bg='light grey')
+    frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
+
+    # Создаем заголовок
+    Label(frame_modal_w, text='Название криптовалюты', compound=LEFT, 
+          justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
+    Label(frame_modal_w, text='В избранное', compound=LEFT, 
+              justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
     
     # Создаем метки с изображением и названием криптовалюты и чекбоксы для их выбора
     for i, key in enumerate(coins_ident):
         Label(frame_modal_w, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
-              width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w") 
-        Checkbutton(frame_modal_w, variable=var_chb[i], onvalue=True, offvalue=False).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
+              width=200, justify="left", anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w") 
+        Checkbutton(frame_modal_w, variable=var_chb[i], onvalue=True, offvalue=False).grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
     
-    # Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(coins_ident), column=1, padx=5, pady=5, sticky ="w")
+    # Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(coins_ident)+1, column=1, padx=5, pady=5, sticky ="w")
     
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
