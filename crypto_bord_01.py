@@ -53,8 +53,7 @@ def open_modal():
     for i, key in enumerate(coins_ident):
         Label(frame_modal_w, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
               width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w") 
-        # tmp_var = IntVar()
-        Checkbutton(frame_modal_w, variable=var_chb[i]).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
+        Checkbutton(frame_modal_w, variable=var_chb[i], onvalue=True, offvalue=False).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
     
 
     Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(coins_ident), column=1, padx=5, pady=5, sticky ="w")
@@ -64,6 +63,22 @@ def open_modal():
     modal_window.grab_set()         # Захватываем ввод
     modal_window.focus_set()        # Переводим фокус на окно
     modal_window.wait_window()      # Ждём закрытия окна
+
+def clear_frame_root():
+    if frame_root.winfo_children():
+        for widget in frame_root.winfo_children():
+            widget.destroy()
+        
+
+def create_labels():
+    global var_chb
+    clear_frame_root()
+    for i, key in enumerate(coins_ident):
+        if var_chb[i].get():
+            Label(frame_root, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
+                  width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w")
+            Label(frame_root, text=f"  {coins_rate.get(key)}", compound=LEFT,
+                      width=40, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
 
 root_scr_size = [620, 520]          # начальный размер корневого окна
 menu_flag = True                    # флаг видимости рамки, строки заголовка и меню окна
@@ -89,10 +104,15 @@ coins_rate = {
 }
 
  # Список индикаторных переменных для выбора отслеживаемых валют
-var_chb = [IntVar() for _ in range(len(coins_ident))]
+var_chb = [BooleanVar() for _ in range(len(coins_ident))]
 
 # Метки с выбранными криптовалютами
-
+# for i, key in enumerate(coins_ident):
+#     if var_chb[i].get():
+#         Label(frame_root, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
+#                   width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w")
+#         Label(frame_root, text=f"  {coins_rate.get(key)}", compound=LEFT,
+#                       width=200, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
 
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
@@ -111,12 +131,15 @@ settings_menu.add_command(label="Выход", command=quit)
 
 # Отладка
 # Кнопка для вывода значений
-# def print_values():
-#     values = [var.get() for var in var_chb]
-#     print(values)
+def print_values():
+    values = [var.get() for var in var_chb]
+    print(values)
     
-# btn = Button(frame_root, text='Печать', command=print_values)
-# btn.grid(row=len(coins_ident)+1, column=1)
+btn = Button(root, text='Печать', command=print_values)
+btn.pack()
+btn1 = Button(root, text='Обновить', command=create_labels)
+btn1.pack()
+
 # Отладка
 
 root.mainloop()
