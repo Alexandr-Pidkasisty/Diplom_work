@@ -36,7 +36,7 @@ def show_menu(event):
 
 def open_modal():
     # Создаём дочернее модальное окно с настройками
-    global cryptos
+    global coins_ident
     global var_chb
     modal_window = Toplevel(root)
     modal_window.title("Выбор криптовалют для отслеживания")
@@ -46,18 +46,18 @@ def open_modal():
     
     # Здесь можно добавить виджеты (кнопки, поля ввода и т.д.)
 
-    # Label(frame_modal_w, text='   bitcoin', image=cryptos.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
-    # Label(frame_modal_w, text='   ethereum', image=cryptos.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+    # Label(frame_modal_w, text='   bitcoin', image=coins_ident.get("bitcoin"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
+    # Label(frame_modal_w, text='   ethereum', image=coins_ident.get("ethereum"), compound=LEFT, width=200, justify="left", anchor="w").pack(padx=10, anchor="w")
 
     # Создаем метки с изображением и названием криптовалюты и чекбоксы для их выбора
-    for i, key in enumerate(cryptos):
-        Label(frame_modal_w, text=f"  {key}", image=cryptos.get(key), compound=LEFT,
+    for i, key in enumerate(coins_ident):
+        Label(frame_modal_w, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
               width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w") 
         # tmp_var = IntVar()
         Checkbutton(frame_modal_w, variable=var_chb[i]).grid(row=i, column=1, padx=5, pady=5, sticky ="w")
     
 
-    Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(cryptos), column=1, padx=5, pady=5, sticky ="w")
+    Button(frame_modal_w, text="Закрыть", command=modal_window.destroy).grid(row=len(coins_ident), column=1, padx=5, pady=5, sticky ="w")
   
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
@@ -77,12 +77,22 @@ frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
 
 # Перечень криптовалют с аватарками
-cryptos = {
+coins_ident = {
     "bitcoin" : ImageTk.PhotoImage(Image.open("images/bitcoin.webp").resize((30, 30))),
-    'ethereum' : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
+    "ethereum" : ImageTk.PhotoImage(Image.open("images/ethereum.webp").resize((30, 30)))
 }
+
+# Перечень криптовалют с курсами
+coins_rate = {
+    "bitcoin" : "82,852.91",
+    "ethereum" : "2,496.02"
+}
+
  # Список индикаторных переменных для выбора отслеживаемых валют
-var_chb = [IntVar() for _ in range(len(cryptos))]
+var_chb = [IntVar() for _ in range(len(coins_ident))]
+
+# Метки с выбранными криптовалютами
+
 
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
@@ -106,7 +116,7 @@ settings_menu.add_command(label="Выход", command=quit)
 #     print(values)
     
 # btn = Button(frame_root, text='Печать', command=print_values)
-# btn.grid(row=len(cryptos)+1, column=1)
+# btn.grid(row=len(coins_ident)+1, column=1)
 # Отладка
 
 root.mainloop()
