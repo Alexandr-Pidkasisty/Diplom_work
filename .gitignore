@@ -8,3 +8,4 @@ bin/
 readme.*
 dist/
 .spec
+data/

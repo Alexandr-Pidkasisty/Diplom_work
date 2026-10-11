@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox as mb
 from PIL import Image, ImageTk, ImageGrab
+import json
+import os
 
 
 def quit():
@@ -57,6 +59,9 @@ def open_modal():
     
     create_labels()                 # Вызываем функцию для создания виджетов в главном окне
 
+    tmp = [value.get() for value in var_chb]    # Создаем временный список типа bool из списка var_chb
+    save_json_safely(tmp, "data/var_chb.json")  # Сохраняем список tmp
+
 
 def clear_frame_root():
     # Очищаем главное окно от виджетов
@@ -76,6 +81,32 @@ def create_labels():
             Label(frame_root, text=f"  ${coins_rate.get(key)}", compound=LEFT,
                       width=40, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
 
+
+def save_json_safely(data, filename):
+    # Функция сериализует данные из data в файл с именем filename
+    try:
+        # Создаём директорию, если её нет
+        os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
+        # Сохраняем файл
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+        return True
+    except TypeError as e:
+        return False, mb.showerror("Ошибка", f"Ошибка типа данных: {str(e)}")
+    except (PermissionError, OSError) as e:
+        return False, mb.showerror("Ошибка", f"Ошибка записи файла: {str(e)}")
+
+
+def load_json_safely(filename):
+    # Функция возвращает данные из файла с именем filename
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return None, mb.showerror("Ошибка", f"Файл {filename} не найден")
+    except json.JSONDecodeError:
+        return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")
+    
 
 # ********************************************************************************************************************
 
@@ -111,7 +142,12 @@ coins_rate = {
 }
 
 # Список индикаторных переменных для выбора отслеживаемых валют
-var_chb = [BooleanVar() for _ in range(len(coins_ident))]
+var_chb = [BooleanVar() for _ in range(len(coins_ident))]   # Создаем пустой список
+tmp = load_json_safely("data/var_chb.json")                 # Пытаемся загрузить значения из файла во временный список
+if tmp is not None:                                         # Если временный список существует, то
+    for i in range(len(var_chb)):                           # Меняем значения списка var_chb на значения из временного
+        var_chb[i].set(tmp[i])
+    create_labels()                                         # Вызываем функцию для создания виджетов в главном окне
 
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
