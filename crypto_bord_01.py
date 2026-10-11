@@ -60,7 +60,7 @@ def open_modal():
     create_labels()                 # Вызываем функцию для создания виджетов в главном окне
 
     tmp = [value.get() for value in var_chb]    # Создаем временный список типа bool из списка var_chb
-    save_json_safely(tmp, "data/var_chb.json")  # Сохраняем список tmp
+    save_json_safely(tmp, var_chb_filename)     # Сохраняем список tmp
 
 
 def clear_frame_root():
@@ -103,15 +103,16 @@ def load_json_safely(filename):
         with open(filename, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        return None, mb.showerror("Ошибка", f"Файл {filename} не найден")
+        return None, mb.showerror("Ошибка", f"Файл {filename} не найден")  # Возвращает список (None "ok")
     except json.JSONDecodeError:
-        return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")
+        return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
     
 
 # ********************************************************************************************************************
 
-# root_scr_size = [620, 520]          # начальный размер корневого окна
-menu_flag = True                    # флаг видимости рамки, строки заголовка и меню окна
+# root_scr_size = [620, 520]            # начальный размер корневого окна
+menu_flag = True                        # флаг видимости рамки, строки заголовка и меню окна
+var_chb_filename = "data/var_chb.json"  # Имя файла для сохранения/ востсановления флагов избранного
 
 # Главное окно программы
 root = Tk()
@@ -141,12 +142,14 @@ coins_rate = {
     "Tether USDT" : "0.9992"
 }
 
-# Список индикаторных переменных для выбора отслеживаемых валют
+# Восстанавливаем из файла/ создаем список индикаторных переменных для выбора отслеживаемых валют.
+#  Создаем виджеты с избранными криптовалютами
 var_chb = [BooleanVar() for _ in range(len(coins_ident))]   # Создаем пустой список
-tmp = load_json_safely("data/var_chb.json")                 # Пытаемся загрузить значения из файла во временный список
-if tmp is not None:                                         # Если временный список существует, то
-    for i in range(len(var_chb)):                           # Меняем значения списка var_chb на значения из временного
-        var_chb[i].set(tmp[i])
+tmp = load_json_safely(var_chb_filename)                    # Пытаемся загрузить значения из файла во временный список
+print(tmp)
+if tmp[0] is not None:                                      # Если временный список из файла прочитан, то
+    for i in range(len(var_chb)):                           # Меняем значения списка var_chb на значения из
+        var_chb[i].set(tmp[i])                              # временного списка
     create_labels()                                         # Вызываем функцию для создания виджетов в главном окне
 
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
