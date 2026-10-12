@@ -103,7 +103,7 @@ def load_json_safely(filename):
         with open(filename, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        return None, mb.showerror("Ошибка", f"Файл {filename} не найден")  # Возвращает список (None "ok")
+        return None, mb.showinfo("Информация", f"Файл с избранными криптовалютами {filename} не найден.\nБудет создан новый файл")  # Возвращает список (None "ok")
     except json.JSONDecodeError:
         return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
     
@@ -113,12 +113,14 @@ def load_json_safely(filename):
 # root_scr_size = [620, 520]            # начальный размер корневого окна
 menu_flag = True                        # флаг видимости рамки, строки заголовка и меню окна
 var_chb_filename = "data/var_chb.json"  # Имя файла для сохранения/ востсановления флагов избранного
+image = 'My_web_01.ico'
 
 # Главное окно программы
 root = Tk()
 root.title("Курсы криптовалют")
 # root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
 root.minsize(300, 150)  # Задал минимальный размер окна
+root.iconbitmap(image)
 
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
