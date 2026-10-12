@@ -79,7 +79,7 @@ def create_labels():
             Label(frame_root, text=f"  {key}", image=coins_ident.get(key), compound=LEFT,
                   width=200, justify="left", anchor="w").grid(row=i, column=0, padx=5, pady=5, sticky ="w")
             Label(frame_root, text=f"  ${coins_rate.get(key)}", compound=LEFT,
-                      width=40, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
+                      width=20, justify="left", anchor="w").grid(row=i, column=1, padx=5, pady=5, sticky ="w")
 
 
 def save_json_safely(data, filename):
@@ -103,7 +103,7 @@ def load_json_safely(filename):
         with open(filename, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        return None, mb.showinfo("Информация", f"Файл с избранными криптовалютами {filename} не найден.\nБудет создан новый файл")  # Возвращает список (None "ok")
+        return None, mb.showinfo("Информация", f"Файл {filename} не найден.\nБудет создан новый файл")  # Возвращает список (None "ok")
     except json.JSONDecodeError:
         return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
     
@@ -119,7 +119,7 @@ image = 'My_web_01.ico'
 root = Tk()
 root.title("Курсы криптовалют")
 # root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
-root.minsize(300, 150)  # Задал минимальный размер окна
+root.minsize(300, 50)  # Задал минимальный размер окна
 root.iconbitmap(image)
 
 frame_root = Frame(root, bg='gray')
