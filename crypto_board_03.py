@@ -23,33 +23,7 @@ def show_menu(event):
     root.config(menu=menu_bar)      # возвращаем действующее меню
     root.overrideredirect(False)    # возвращаем рамку и строку заголовка
     menu_flag = True                # меняем флаг корневого окна
-
-
-def save_json_safely(data, filename):
-    # Функция сериализует данные из data в файл с именем filename
-    try:
-        # Создаём директорию, если её нет
-        os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
-        # Сохраняем файл
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        return True
-    except TypeError as e:
-        return False, mb.showerror("Ошибка", f"Ошибка типа данных: {str(e)}")
-    except (PermissionError, OSError) as e:
-        return False, mb.showerror("Ошибка", f"Ошибка записи файла: {str(e)}")
-
-
-def load_json_safely(filename):
-    # Функция возвращает данные из файла с именем filename
-    try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return None, mb.showerror("Информация", f"Файл {filename} не найден.")  # Возвращает список (None "ok")
-    except json.JSONDecodeError:
-        return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
-    
+  
 
 def clear_frame_root():
     # Функция очистки главного окна от виджетов
