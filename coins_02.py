@@ -46,5 +46,17 @@ r1 = requests.get("https://api.coinlore.net/api/ticker/", params={"id": Str})  #
 for coin in r1.json():                                  # Контрольный вывод на экран результатов запроса
     print(coin["name"], "\t" + coin["symbol"], "\t$" + coin["price_usd"], "\t" + coin["percent_change_24h"])
 
+ass2 = r1.json()
+# Сохраняем в файл, чтобы не делать запросы слишком часто
+with open('data/indices_coins.json', 'w', encoding='utf-8') as f:
+            json.dump(ass2, f, indent=4, ensure_ascii=False)
+
+# Читаем из файла большой перечень валют
+with open('data/indices_coins.json', 'r', encoding='utf-8') as f:
+    ass3 = json.load(f)
+
+for coin in ass3:                                  # Контрольный вывод на экран результатов запроса
+    print(coin["name"], "\t" + coin["symbol"], "\t$" + coin["price_usd"], "\t" + coin["percent_change_24h"])
+
 # for i, value in enumerate(filtered_r):
 #     print(value["symbol"], value["price_usd"])
