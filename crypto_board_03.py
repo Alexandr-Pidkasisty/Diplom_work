@@ -98,18 +98,14 @@ def open_modal():
 def update_favor():
     global fav_id
     global time_stamp
+    global favourites_id_fname
     # Обновление избранных крниптовалют
     try:
         with open(favourites_id_fname, 'r', encoding='utf-8') as f:
             fav_id = f.read()
     except Exception as e:
-        mb.showerror("Ошибка", f"При попытке открыть файл {favourites_id_fname} произошла ошибка {e}")
-        with open(favourites_id_fname, 'w', encoding='utf-8') as f:
-            f.write(fav_id)
-    # print(fav_id)
+        mb.showerror("Ошибка", f"При попытке открыть файл {favourites_id_fname} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
     data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
-    # with open(favourites_coins_fname, 'w', encoding='utf-8') as f:
-    #         json.dump(data.json(), f, indent=4, ensure_ascii=False)
     save_json_safely(data.json(), favourites_coins_fname)
     time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
     try:
