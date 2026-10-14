@@ -104,6 +104,8 @@ def update_favor():
             fav_id = f.read()
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {favourites_id_fname} произошла ошибка {e}")
+        with open(favourites_id_fname, 'w', encoding='utf-8') as f:
+            f.write(fav_id)
     # print(fav_id)
     data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
     # with open(favourites_coins_fname, 'w', encoding='utf-8') as f:
