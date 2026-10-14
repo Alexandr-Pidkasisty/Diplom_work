@@ -41,7 +41,13 @@ for i, value in enumerate(ass1):
 print(filtered_r)                                       # Отладочный вывод на экран
 
 Str = ','.join(filtered_r)                              # Формируем строку для подстановки в запрос к сайту
-print(Str)
+with open('data/favor_id.cfg', 'w', encoding='utf-8') as f:
+     f.write(Str)
+
+with open('data/favor_id.cfg', 'r', encoding='utf-8') as f:
+     Str1 = f.read()
+
+print(Str1)
 r1 = requests.get("https://api.coinlore.net/api/ticker/", params={"id": Str})  # Делаем запрос к сайту по выбранным валютам
 for coin in r1.json():                                  # Контрольный вывод на экран результатов запроса
     print(coin["name"], "\t" + coin["symbol"], "\t$" + coin["price_usd"], "\t" + coin["percent_change_24h"])
