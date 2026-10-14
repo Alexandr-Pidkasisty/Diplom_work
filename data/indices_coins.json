@@ -1,0 +1,38 @@
+[
+    {
+        "id": "48543",
+        "symbol": "SOL",
+        "name": "Solana",
+        "nameid": "solana",
+        "rank": 7,
+        "price_usd": "104.44",
+        "percent_change_24h": "-3.34",
+        "percent_change_1h": "-0.25",
+        "percent_change_7d": "-11.52",
+        "price_btc": "0.001339",
+        "market_cap_usd": "56725929966.63",
+        "volume24": 2222203033.4351616,
+        "volume24a": 3370634322.4512324,
+        "csupply": "543155320.58",
+        "tsupply": "543155320.57915",
+        "msupply": ""
+    },
+    {
+        "id": "2713",
+        "symbol": "TRX",
+        "name": "TRON",
+        "nameid": "tron",
+        "rank": 8,
+        "price_usd": "0.333263",
+        "percent_change_24h": "1.64",
+        "percent_change_1h": "0.01",
+        "percent_change_7d": "-0.22",
+        "price_btc": "0.000004",
+        "market_cap_usd": "31548680580.68",
+        "volume24": 456784810.4845679,
+        "volume24a": 342557642.0427494,
+        "csupply": "94666134895.32",
+        "tsupply": "100000000000",
+        "msupply": ""
+    }
+]
