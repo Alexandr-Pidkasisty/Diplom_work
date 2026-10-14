@@ -163,15 +163,18 @@ def update_favor():
             fav_id = f.read()
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {favourites_id_fname} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
-    data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
-    save_json_safely(data.json(), favourites_coins_fname)
-    time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
-    try:
-        with open(time_stamp_fname, 'w', encoding='utf-8') as f:
-            f.write(time_stamp)
-    except Exception as e:
+    if fav_id != '':
+        data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
+        save_json_safely(data.json(), favourites_coins_fname)
+        time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
+        try:
+            with open(time_stamp_fname, 'w', encoding='utf-8') as f:
+                f.write(time_stamp)
+        except Exception as e:
             mb.showerror("Ошибка", f"При попытке открыть файл {time_stamp_fname} произошла ошибка {e}")
-    create_labels()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
+        create_labels()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
+    else:
+        mb.showerror("Ошибка", "Не выбрано ни одной валюты")
 
 
 def update_guide():
@@ -188,7 +191,7 @@ image = 'My_web_01.ico'
 total_coins_fname ='data/total_coins.json'           # Имя файла с полным списком валют
 favourites_coins_fname = 'data/indices_coins.json'   # Имя файла со справочником избранных валют
 favourites_id_fname = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
-fav_id = '90'                                        # Строка с индексами избранных валют
+fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
 time_stamp_fname = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
