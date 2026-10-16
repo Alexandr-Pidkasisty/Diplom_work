@@ -40,15 +40,15 @@ def clear_frame_root():
 
 def create_labels():
     # Функция создания виджетов в главном окне: выводятся избранные криптовалюты и их курсы
-    global favourites_coins_fname
+    global FAVOURITES_COINS_FNAME
     global time_stamp
     clear_frame_root()  # Очищаем главное окно от виджетов
-    favourites = load_json_safely(favourites_coins_fname)
+    favourites = load_json_safely(FAVOURITES_COINS_FNAME)
     try:
-        with open(time_stamp_fname, 'r', encoding='utf-8') as f:
+        with open(TIME_STAMP_FNAME, 'r', encoding='utf-8') as f:
             time_stamp = f.read()
     except Exception as e:
-        mb.showerror("Ошибка", f"При попытке открыть файл {time_stamp_fname} произошла ошибка {e}")
+        mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
     if (favourites[0])  != None:
         Label(frame_root, text="Наименование", compound=LEFT, width=30, 
             justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
@@ -120,69 +120,6 @@ def load_pickle_safely(filename):
 
 
 def open_modal():
-    # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
-    try:
-        with open(total_coins_fname, 'r', encoding='utf-8') as f:
-            tot_coins = json.load(f)
-    except Exception as e:
-            mb.showerror("Ошибка", f"При попытке открыть файл {total_coins_fname} произошла ошибка {e}.")
-    
-    # Создаём дочернее модальное окно с настройками.
-    modal_window = Toplevel(root)
-    modal_window.title("Справочник криптовалют")
-    
-    # Создаем фрейм
-    frame_modal_w = Frame(modal_window)
-    frame_modal_w.pack(fill="x", padx=10, pady=5)
-    
-    # Создаем заголовок
-    Label(frame_modal_w, text='Название криптовалюты', compound=LEFT, 
-        justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
-    Label(frame_modal_w, text='В избранное', compound=LEFT, 
-        justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
-
-    # Восстанавливаем флаги выбранных валют
-    var_chb = [BooleanVar() for _ in range(len(tot_coins))]   # Создаем пустой список-маску для отбора избранных валют
-    tmp = load_json_safely(var_chb_filename)                  # Пытаемся загрузить значения из файла во временный список
-    if tmp[0] is not None:                                    # Если временный список из файла прочитан, то
-        for i in range(len(var_chb)):                         # Меняем значения списка var_chb на значения из
-            var_chb[i].set(tmp[i])                            # временного списка
-
-    # Создаем метки с названием криптовалюты и чекбоксы для их выбора
-    for i, coin in enumerate(tot_coins):
-        Label(frame_modal_w, text=f"{coin["name"]} ({coin["symbol"]})", compound=LEFT, width=20, justify="left", 
-            anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w") 
-        Checkbutton(frame_modal_w, variable=var_chb[i], onvalue=True, offvalue=False).grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
-
-    # Настраиваем модальность
-    modal_window.transient(root)    # Связываем с главным окном
-    modal_window.grab_set()         # Захватываем ввод
-    modal_window.focus_set()        # Переводим фокус на окно
-    modal_window.wait_window()      # Ждём закрытия окна
-
-    # Сохраняем выбор криптовалют
-    tmp1 = [value.get() for value in var_chb]    # Создаем временный список типа bool из списка var_chb
-    save_json_safely(tmp1, var_chb_filename)     # Сохраняем список tmp
-
-    # Формируем список идентификаторов избранных валют
-    indices = []                            # Список для хранения идентификаторов избранных валют
-    for i, value in enumerate(tot_coins):
-        if var_chb[i].get():                # Если в списке на позиции i стоит True, то 
-            indices.append(value["id"])     # добавляем i-й идентификатор валюты в избранное
-    indices_str = ','.join(indices)         # Формируем строку для подстановки в запрос к сайту
-
-    # Сохраняем строку для запроса информации по избранным валютам в файл
-    try:
-        with open(favourites_id_fname, 'w', encoding='utf-8') as f:
-            f.write(indices_str)
-    except Exception as e:
-        mb.showerror("Ошибка", f"При попытке сохранить файл {favourites_id_fname} произошла ошибка {e}.")
-
-    # Обновляем избранные валюты и перерисовывам главное окно
-    update_favor()
-
-
-def open_modal1():
     selected_indices = set()  # Множество для хранения списка выбранных индексом
     
     def on_select(event):
@@ -197,7 +134,7 @@ def open_modal1():
 
         
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
-    tot_coins = load_json_safely(total_coins_fname)
+    tot_coins = load_json_safely(TOTAL_COINS_FNAME)
     selected_indices = load_pickle_safely(SELECTED_INDS)
     # print("Old values", selected_indices)
     
@@ -254,10 +191,10 @@ def open_modal1():
 
     # Сохраняем строку для запроса информации по избранным валютам в файл
     try:
-        with open(favourites_id_fname, 'w', encoding='utf-8') as f:
+        with open(FAVOURITES_ID_FNAME, 'w', encoding='utf-8') as f:
             f.write(indices_str)
     except Exception as e:
-        mb.showerror("Ошибка", f"При попытке сохранить файл {favourites_id_fname} произошла ошибка {e}.")
+        mb.showerror("Ошибка", f"При попытке сохранить файл {FAVOURITES_ID_FNAME} произошла ошибка {e}.")
     
     # Обновляем избранные валюты и перерисовывам главное окно
     update_favor()
@@ -268,22 +205,22 @@ def open_modal1():
 def update_favor():
     global fav_id
     global time_stamp
-    global favourites_id_fname
+    global FAVOURITES_ID_FNAME
     # Обновление избранных крниптовалют
     try:
-        with open(favourites_id_fname, 'r', encoding='utf-8') as f:
+        with open(FAVOURITES_ID_FNAME, 'r', encoding='utf-8') as f:
             fav_id = f.read()
     except Exception as e:
-        mb.showerror("Ошибка", f"При попытке открыть файл {favourites_id_fname} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
+        mb.showerror("Ошибка", f"При попытке открыть файл {FAVOURITES_ID_FNAME} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
     if fav_id != '':
         data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
-        save_json_safely(data.json(), favourites_coins_fname)
+        save_json_safely(data.json(), FAVOURITES_COINS_FNAME)
         time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
         try:
-            with open(time_stamp_fname, 'w', encoding='utf-8') as f:
+            with open(TIME_STAMP_FNAME, 'w', encoding='utf-8') as f:
                 f.write(time_stamp)
         except Exception as e:
-            mb.showerror("Ошибка", f"При попытке открыть файл {time_stamp_fname} произошла ошибка {e}")
+            mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
         create_labels()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
     else:
         mb.showerror("Ошибка", "Не выбрано ни одной валюты")
@@ -299,22 +236,23 @@ def update_guide():
 
 # root_scr_size = [620, 520]            # начальный размер корневого окна
 menu_flag = True                        # флаг видимости рамки, строки заголовка и меню окна
-image = 'My_web_01.ico'
-total_coins_fname ='data/total_coins.json'           # Имя файла с полным списком валют
-favourites_coins_fname = 'data/indices_coins.json'   # Имя файла со справочником избранных валют
-favourites_id_fname = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
-fav_id = ''                                          # Строка с индексами избранных валют
-time_stamp = ''                                      # Текущее время
-time_stamp_fname = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
+MAIN_ICON = 'My_web_01.ico'
+TOTAL_COINS_FNAME ='data/total_coins.json'           # Имя файла с полным списком валют
+FAVOURITES_COINS_FNAME = 'data/indices_coins.json'   # Имя файла со справочником избранных валют
+FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
+TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
 SELECTED_INDS = "data/selected_indices"              # Имя файла с номерами выбранных строк
+
+fav_id = ''                                          # Строка с индексами избранных валют
+time_stamp = ''                                      # Текущее время
 
 # Главное окно программы
 root = Tk()
 root.title("Курсы криптовалют")
 # root.geometry(f"{root_scr_size[0]}x{root_scr_size[1]}")
 root.minsize(300, 50)  # Задал минимальный размер окна
-root.iconbitmap(image)
+root.iconbitmap(MAIN_ICON)
 
 frame_root = Frame(root, bg='gray')
 frame_root.pack(fill="x", padx=10, pady=5)
@@ -329,7 +267,6 @@ root.config(menu=menu_bar)
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
 settings_menu.add_command(label="Справочник", command=open_modal)
-settings_menu.add_command(label="Справочник New", command=open_modal1)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
 
