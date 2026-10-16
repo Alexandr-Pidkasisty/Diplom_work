@@ -242,7 +242,7 @@ FAVOURITES_COINS_FNAME = 'data/indices_coins.json'   # Имя файла со с
 FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
 TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
-SELECTED_INDS = "data/selected_indices"              # Имя файла с номерами выбранных строк
+SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк
 
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
