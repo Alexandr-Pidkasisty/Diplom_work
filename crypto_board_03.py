@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox as mb
+from tkinter import ttk
 import json
 import os
 import requests
@@ -153,6 +154,65 @@ def open_modal():
     # Обновляем избранные валюты и перерисовывам главное окно
     update_favor()
 
+
+def open_modal1():
+    selected_indices = None  # Переменная для хранения списка выбранных индексом
+    
+    def on_select(event):
+        nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
+        selected_indices = event.widget.curselection()
+        
+    # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
+    # tot_coins = load_json_safely(total_coins_fname)[0]
+    try:
+        with open(total_coins_fname, 'r', encoding='utf-8') as f:
+            tot_coins = json.load(f)
+    except Exception as e:
+        mb.showerror("Ошибка", f"При попытке открыть файл {total_coins_fname} произошла ошибка {e}.")
+
+    # Создаём дочернее модальное окно с настройками.
+    modal_window = Toplevel(root)
+    modal_window.title("Справочник криптовалют")
+        
+    # Создаем фрейм
+    frame_modal_w = Frame(modal_window)
+    frame_modal_w.pack(fill="x", padx=10, pady=5)
+
+    # Создаём вертикальную Scrollbar
+    scrollbar = Scrollbar(frame_modal_w, orient=VERTICAL)
+    scrollbar.pack(side=RIGHT, fill=Y)
+
+    # Создаем Listbox с названием криптовалюты для их выбора
+    lb = Listbox(frame_modal_w, selectmode="multiple", yscrollcommand=scrollbar.set)
+    lb.pack(fill="both", expand=True)
+
+    # Настраиваем Scrollbar, чтобы он управлял прокруткой Listbox
+    scrollbar.config(command=lb.yview)
+
+    # Заполняем Listbox элементами
+    # print(tot_coins)
+    # lb.insert(END, [tot_coins[i] for i in enumerate(tot_coins)])
+    for i, coin in enumerate(tot_coins):
+        lb.insert(END, f"{coin["name"]} ({coin["symbol"]})")
+
+    # Обработка события изменения выбора
+    
+    lb.bind("<<ListboxSelect>>", on_select)
+
+    # Настраиваем модальность
+    modal_window.transient(root)    # Связываем с главным окном
+    modal_window.grab_set()         # Захватываем ввод
+    modal_window.focus_set()        # Переводим фокус на окно
+    modal_window.wait_window()      # Ждём закрытия окна
+
+    print("Итого выбранные индексы:", selected_indices)
+
+
+
+
+
+
+
 def update_favor():
     global fav_id
     global time_stamp
@@ -216,6 +276,7 @@ root.config(menu=menu_bar)
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
 settings_menu.add_command(label="Справочник", command=open_modal)
+settings_menu.add_command(label="Справочник New", command=open_modal1)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
 
