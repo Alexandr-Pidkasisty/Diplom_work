@@ -5,6 +5,7 @@ import json
 import os
 import requests
 from datetime import datetime
+import pickle
 
 
 def quit():
@@ -66,6 +67,21 @@ def create_labels():
     label_upd.pack(side=RIGHT, pady=5, padx=5)
 
 
+def save_cfg_safely(data, filename):
+    # Функция сериализует байтовые данные из data в файл с именем filename
+    try:
+        # Создаём директорию, если её нет
+        os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
+        # Сохраняем файл
+        with open(filename, 'wb') as f:
+            pickle.dump(data, f)
+        return True
+    except (PermissionError, OSError) as e:
+        return False, mb.showerror("Ошибка", f"Ошибка записи файла: {str(e)}")
+    except Exception as e:
+        return None, mb.showerror("Ошибка", f"Ошибка: {str(e)}")
+
+
 def save_json_safely(data, filename):
     # Функция сериализует данные из data в файл с именем filename
     try:
@@ -90,6 +106,17 @@ def load_json_safely(filename):
         return None, mb.showerror("Информация", f"Файл {filename} не найден")  # Возвращает список (None "ok")
     except json.JSONDecodeError:
         return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
+
+
+def load_cfg_safely(filename):
+    # Функция возвращает байтовые данные из файла с именем filename
+    try:
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return None, mb.showerror("Информация", f"Файл {filename} не найден")  # Возвращает список (None "ok")
+    except Exception as e:
+        return None, mb.showerror("Ошибка", f"Ошибка: {str(e)}")
 
 
 def open_modal():
@@ -160,23 +187,28 @@ def open_modal1():
     
     def on_select(event):
         nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
-        selected_indices = event.widget.curselection()
+        selected_indices = set(event.widget.curselection())
         
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
-    # tot_coins = load_json_safely(total_coins_fname)[0]
-    try:
-        with open(total_coins_fname, 'r', encoding='utf-8') as f:
-            tot_coins = json.load(f)
-    except Exception as e:
-        mb.showerror("Ошибка", f"При попытке открыть файл {total_coins_fname} произошла ошибка {e}.")
-
+    tot_coins = load_json_safely(total_coins_fname)
+    selected_indices = load_cfg_safely(SELECTED_INDS)
+    print("Old values", selected_indices)
+    
     # Создаём дочернее модальное окно с настройками.
     modal_window = Toplevel(root)
     modal_window.title("Справочник криптовалют")
         
-    # Создаем фрейм
+    # Создаем фреймы
+    frame_btn = Frame(modal_window)
+    frame_btn.pack(fill="x", padx=10, pady=5)
+
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
+
+    # Создаем переключатель "Заменить/Добавить"
+    how_to_set = BooleanVar(value=True)
+    Radiobutton(frame_btn, text='Заменить', variable=how_to_set, value=True).pack(side=LEFT)
+    Radiobutton(frame_btn, text='Добавить', variable=how_to_set, value=False).pack(side=LEFT)
 
     # Создаём вертикальную Scrollbar
     scrollbar = Scrollbar(frame_modal_w, orient=VERTICAL)
@@ -205,7 +237,8 @@ def open_modal1():
     modal_window.focus_set()        # Переводим фокус на окно
     modal_window.wait_window()      # Ждём закрытия окна
 
-    print("Итого выбранные индексы:", selected_indices)
+    print("Итого выбранные индексы (множество):", selected_indices)
+    save_cfg_safely(selected_indices, SELECTED_INDS)
 
 
 
@@ -255,6 +288,7 @@ fav_id = ''                                          # Строка с инде�
 time_stamp = ''                                      # Текущее время
 time_stamp_fname = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
+SELECTED_INDS = "data/selected_indices"              # Имя файла с номерами выбранных строк
 
 # Главное окно программы
 root = Tk()
