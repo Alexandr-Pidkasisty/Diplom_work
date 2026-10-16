@@ -198,7 +198,7 @@ def open_modal1():
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
     tot_coins = load_json_safely(total_coins_fname)
     selected_indices = load_pickle_safely(SELECTED_INDS)
-    print("Old values", selected_indices)
+    # print("Old values", selected_indices)
     
     # Создаём дочернее модальное окно с настройками.
     modal_window = Toplevel(root)
@@ -245,7 +245,7 @@ def open_modal1():
     modal_window.focus_set()        # Переводим фокус на окно
     modal_window.wait_window()      # Ждём закрытия окна
 
-    print("Итого выбранные индексы (множество):", selected_indices)
+    # print("Итого выбранные индексы (множество):", selected_indices)
     save_pickle_safely(selected_indices, SELECTED_INDS)
 
 
