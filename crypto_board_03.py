@@ -183,9 +183,10 @@ def open_modal():
 
 
 def open_modal1():
-    selected_indices = set()  # Переменная для хранения списка выбранных индексом
+    selected_indices = set()  # Множество для хранения списка выбранных индексом
     
     def on_select(event):
+        # Функция устанавливает новые значения для множества selected_indices
         nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
         # selected_indices = set(event.widget.curselection())
         if how_to_set.get():
@@ -207,7 +208,6 @@ def open_modal1():
     # Создаем фреймы
     frame_btn = Frame(modal_window)
     frame_btn.pack(fill="x", padx=10, pady=5)
-
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
 
@@ -228,15 +228,13 @@ def open_modal1():
     scrollbar.config(command=lb.yview)
 
     # Заполняем Listbox элементами
-    # print(tot_coins)
-    # lb.insert(END, [tot_coins[i] for i in enumerate(tot_coins)])
+    indices = []                            # Список для хранения идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
         lb.insert(END, f"{coin["name"]} ({coin["symbol"]})")
-        if i in selected_indices:   # Если i совпадает с одним из элементов множества selected_indices, то
-            lb.select_set(i)        # Этот элемент выделяется
+        if i in selected_indices:           # Если i совпадает с одним из элементов множества selected_indices, то
+            lb.select_set(i)                # Этот элемент выделяется
 
-    # Обработка события изменения выбора
-    
+    # Обработка события изменения выбора элементов lb
     lb.bind("<<ListboxSelect>>", on_select)
 
     # Настраиваем модальность
@@ -245,14 +243,27 @@ def open_modal1():
     modal_window.focus_set()        # Переводим фокус на окно
     modal_window.wait_window()      # Ждём закрытия окна
 
-    # print("Итого выбранные индексы (множество):", selected_indices)
+    # Сохраняем множество со списком выбранных индексов
     save_pickle_safely(selected_indices, SELECTED_INDS)
 
+    # Формируем список идентификаторов избранных валют
+    for i, coin in enumerate(tot_coins):
+        if i in selected_indices:           # Если i совпадает с одним из элементов множества selected_indices, то
+            indices.append(coin["id"])      # добавляем i-й идентификатор валюты в избранное
+    indices_str = ','.join(indices)         # Формируем строку для подстановки в запрос к сайту
 
+    # Сохраняем строку для запроса информации по избранным валютам в файл
+    try:
+        with open(favourites_id_fname, 'w', encoding='utf-8') as f:
+            f.write(indices_str)
+    except Exception as e:
+        mb.showerror("Ошибка", f"При попытке сохранить файл {favourites_id_fname} произошла ошибка {e}.")
+    
+    # Обновляем избранные валюты и перерисовывам главное окно
+    update_favor()
 
-
-
-
+# def open_modal1
+    
 
 def update_favor():
     global fav_id
