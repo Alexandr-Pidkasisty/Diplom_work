@@ -67,8 +67,8 @@ def create_labels():
     label_upd.pack(side=RIGHT, pady=5, padx=5)
 
 
-def save_cfg_safely(data, filename):
-    # Функция сериализует байтовые данные из data в файл с именем filename
+def save_pickle_safely(data, filename):
+    # Функция преобразует объект в байтовый поток и сериализует поток в файл с именем filename
     try:
         # Создаём директорию, если её нет
         os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
@@ -108,7 +108,7 @@ def load_json_safely(filename):
         return None, mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
 
 
-def load_cfg_safely(filename):
+def load_pickle_safely(filename):
     # Функция возвращает байтовые данные из файла с именем filename
     try:
         with open(filename, 'rb') as f:
@@ -183,15 +183,21 @@ def open_modal():
 
 
 def open_modal1():
-    selected_indices = None  # Переменная для хранения списка выбранных индексом
+    selected_indices = set()  # Переменная для хранения списка выбранных индексом
     
     def on_select(event):
         nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
-        selected_indices = set(event.widget.curselection())
+        # selected_indices = set(event.widget.curselection())
+        if how_to_set.get():
+            selected_indices.clear
+            selected_indices = set(event.widget.curselection())
+        else:
+            selected_indices.update(event.widget.curselection())
+
         
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
     tot_coins = load_json_safely(total_coins_fname)
-    selected_indices = load_cfg_safely(SELECTED_INDS)
+    selected_indices = load_pickle_safely(SELECTED_INDS)
     print("Old values", selected_indices)
     
     # Создаём дочернее модальное окно с настройками.
@@ -226,6 +232,8 @@ def open_modal1():
     # lb.insert(END, [tot_coins[i] for i in enumerate(tot_coins)])
     for i, coin in enumerate(tot_coins):
         lb.insert(END, f"{coin["name"]} ({coin["symbol"]})")
+        if i in selected_indices:   # Если i совпадает с одним из элементов множества selected_indices, то
+            lb.select_set(i)        # Этот элемент выделяется
 
     # Обработка события изменения выбора
     
@@ -238,7 +246,7 @@ def open_modal1():
     modal_window.wait_window()      # Ждём закрытия окна
 
     print("Итого выбранные индексы (множество):", selected_indices)
-    save_cfg_safely(selected_indices, SELECTED_INDS)
+    save_pickle_safely(selected_indices, SELECTED_INDS)
 
 
 
