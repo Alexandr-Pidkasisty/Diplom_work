@@ -55,14 +55,14 @@ def create_labels():
         Label(frame_root, text="Символ", compound=LEFT, width=10, 
             justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
         Label(frame_root, text="Стоимость", compound=LEFT, width=15, 
-            justify="left", anchor="w").grid(row=0, column=2, padx=5, pady=5, sticky ="w")
+            justify="left", anchor="e").grid(row=0, column=2, padx=5, pady=5, sticky ="w")
         for i, coin in enumerate(favourites):                                  
             Label(frame_root, text=f"{coin["name"]}", compound=LEFT, width=30, 
                 justify="left", anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w")
             Label(frame_root, text=f"{coin["symbol"]}", compound=LEFT, width=10, 
                 justify="left", anchor="w").grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
             Label(frame_root, text=f"${coin["price_usd"]}", compound=LEFT, width=15, 
-                justify="left", anchor="w").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
+                justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
     label_upd = Label(frame_footer, text=f"Последнее обновление: {time_stamp}")
     label_upd.pack(side=RIGHT, pady=5, padx=5)
 
@@ -143,10 +143,15 @@ def open_modal():
     modal_window.title("Справочник криптовалют")
         
     # Создаем фреймы
+    frame_lab = Frame(modal_window)
+    frame_lab.pack(fill="x", padx=10, pady=5)
     frame_btn = Frame(modal_window)
     frame_btn.pack(fill="x", padx=10, pady=5)
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
+
+    # Создаем метку с общим числом монет
+    Label(frame_lab, text=f"Общее число монет в справочнике: {len(tot_coins)}").pack(side=LEFT)
 
     # Создаем переключатель "Заменить/Добавить"
     how_to_set = BooleanVar(value=True)
@@ -267,14 +272,14 @@ root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
-settings_menu.add_command(label="Выбрать валюты", command=open_modal)
+settings_menu.add_command(label="Выбрать монеты", command=open_modal)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
 
 update_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Обновление", menu=update_menu)
 update_menu.add_command(label='Избранное', command=update_favor)
-update_menu.add_command(label='Справочник валют', command=update_guide)
+update_menu.add_command(label='Справочник монет', command=update_guide)
 
 # Создаем виджеты в главном окне
 create_labels()
