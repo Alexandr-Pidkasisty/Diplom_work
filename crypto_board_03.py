@@ -243,6 +243,7 @@ FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с ид
 TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
 SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк
+REQUEST_TOTAL_COINS ="https://api.coinlore.net/api/tickers/"  # Адрес для запроса
 
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
@@ -266,13 +267,13 @@ root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Настройки', menu=settings_menu)
-settings_menu.add_command(label="Справочник", command=open_modal)
+settings_menu.add_command(label="Выбрать валюты", command=open_modal)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
 
 update_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Обновление", menu=update_menu)
-update_menu.add_command(label='Курсы валют', command=update_favor)
+update_menu.add_command(label='Избранное', command=update_favor)
 update_menu.add_command(label='Справочник валют', command=update_guide)
 
 # Создаем виджеты в главном окне
