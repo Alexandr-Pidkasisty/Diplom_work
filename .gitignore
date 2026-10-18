@@ -9,3 +9,4 @@ readme.*
 dist/
 .spec
 data/
+data_coins
