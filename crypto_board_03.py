@@ -121,42 +121,52 @@ def load_pickle_safely(filename):
 
 def open_modal():
     selected_indices = set()  # Множество для хранения списка выбранных индексом
-    
+    sel_ind_flag = False      # Флаг отображения выбранных индексов при открытии окна modal_window
+
+    def chk_btn_changed():
+        nonlocal sel_ind_flag
+        print(chk_btn_var.get())
+        sel_ind_flag = chk_btn_var.get()
+        
     def on_select(event):
         # Функция устанавливает новые значения для множества selected_indices
         nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
         # selected_indices = set(event.widget.curselection())
         if how_to_set.get():
+            selected_indices.update(event.widget.curselection())
+        else:
             selected_indices.clear
             selected_indices = set(event.widget.curselection())
-        else:
-            selected_indices.update(event.widget.curselection())
 
-        
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
     tot_coins = load_json_safely(TOTAL_COINS_FNAME)
     selected_indices = load_pickle_safely(SELECTED_INDS)
-    # print("Old values", selected_indices)
+
+    # Читаем из файла флаг
+    sel_ind_flag = load_pickle_safely("data/sel_ind_flag.cfg")
+    print("To read", sel_ind_flag)
     
     # Создаём дочернее модальное окно с настройками.
     modal_window = Toplevel(root)
-    modal_window.title("Справочник криптовалют")
+    modal_window.title("Выбор монет")
         
     # Создаем фреймы
     frame_lab = Frame(modal_window)
     frame_lab.pack(fill="x", padx=10, pady=5)
-    frame_btn = Frame(modal_window)
-    frame_btn.pack(fill="x", padx=10, pady=5)
+    frame_rbtn = Frame(modal_window)
+    frame_rbtn.pack(fill="x", padx=10, pady=5)
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
+    frame_buttons = Frame(modal_window)
+    frame_buttons.pack(fill="x", padx=10, pady=5)
 
     # Создаем метку с общим числом монет
     Label(frame_lab, text=f"Общее число монет в справочнике: {len(tot_coins)}").pack(side=LEFT)
 
     # Создаем переключатель "Заменить/Добавить"
     how_to_set = BooleanVar(value=True)
-    Radiobutton(frame_btn, text='Заменить', variable=how_to_set, value=True).pack(side=LEFT)
-    Radiobutton(frame_btn, text='Добавить', variable=how_to_set, value=False).pack(side=LEFT)
+    Radiobutton(frame_rbtn, text='Добавить', variable=how_to_set, value=True).pack(side=LEFT)
+    Radiobutton(frame_rbtn, text='Заменить', variable=how_to_set, value=False).pack(side=LEFT)
 
     # Создаём вертикальную Scrollbar
     scrollbar = Scrollbar(frame_modal_w, orient=VERTICAL)
@@ -170,14 +180,25 @@ def open_modal():
     scrollbar.config(command=lb.yview)
 
     # Заполняем Listbox элементами
-    indices = []                            # Список для хранения идентификаторов избранных валют
+    indices = []                                    # Список для хранения идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
         lb.insert(END, f"{coin["name"]} ({coin["symbol"]})")
-        if i in selected_indices:           # Если i совпадает с одним из элементов множества selected_indices, то
-            lb.select_set(i)                # Этот элемент выделяется
+        if sel_ind_flag and i in selected_indices:  # Если i совпадает с одним из элементов множества selected_indices, то
+            lb.select_set(i)                        # Этот элемент выделяется
 
     # Обработка события изменения выбора элементов lb
     lb.bind("<<ListboxSelect>>", on_select)
+
+    chk_btn_var = BooleanVar(value=sel_ind_flag)
+    chk_btn = Checkbutton(frame_modal_w, text="Выделять избранные монеты при последующем открытии окна", variable=chk_btn_var,
+                          onvalue=True, offvalue=False, command=chk_btn_changed)
+    chk_btn.pack(side=LEFT, padx=5)
+    # chk_btn.deselect()
+
+    btn_save = Button(frame_buttons, text="Сохранить выбор")
+    btn_save.pack(side=LEFT)
+    btn_exit = Button(frame_buttons, text="Закрыть окно")
+    btn_exit.pack(side=LEFT)
 
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
@@ -187,6 +208,10 @@ def open_modal():
 
     # Сохраняем множество со списком выбранных индексов
     save_pickle_safely(selected_indices, SELECTED_INDS)
+
+    # Сохраняем выбор "Выделять избранные монеты при последующем открытии окна"
+    save_pickle_safely(sel_ind_flag, "data/sel_ind_flag.cfg")
+    print("saved", sel_ind_flag)
 
     # Формируем список идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
