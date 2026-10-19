@@ -121,6 +121,7 @@ def load_pickle_safely(filename):
 
 def open_modal():
     selected_indices = set()  # Множество для хранения списка выбранных индексом
+    sel_buffer = []           # Буфер для хранения списка выделенных элементов виджета lb
     sel_ind_flag = False      # Флаг отображения выбранных индексов при открытии окна modal_window
 
     def chk_btn_changed():
@@ -137,6 +138,24 @@ def open_modal():
         else:
             selected_indices.clear
             selected_indices = set(event.widget.curselection())
+
+
+    def on_select1(event):
+        # Функция сохраняет список выделенных элементов виджета lb в буфере
+        nonlocal sel_buffer
+        sel_buffer = event.widget.curselection()
+
+    def on_click():
+        # Функция устанавливает новые значения для множества selected_indices
+        # и завершает работу окна
+        nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
+        nonlocal sel_buffer
+        if how_to_set.get():
+            selected_indices.update(sel_buffer)     # добавляем
+        else:
+            selected_indices.clear
+            selected_indices = set(sel_buffer)      # заменяем
+        modal_window.destroy()
 
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
     tot_coins = load_json_safely(TOTAL_COINS_FNAME)
@@ -187,7 +206,7 @@ def open_modal():
             lb.select_set(i)                        # Этот элемент выделяется
 
     # Обработка события изменения выбора элементов lb
-    lb.bind("<<ListboxSelect>>", on_select)
+    lb.bind("<<ListboxSelect>>", on_select1)
 
     chk_btn_var = BooleanVar(value=sel_ind_flag)
     chk_btn = Checkbutton(frame_modal_w, text="Выделять избранные монеты при последующем открытии окна", variable=chk_btn_var,
@@ -195,10 +214,8 @@ def open_modal():
     chk_btn.pack(side=LEFT, padx=5)
     # chk_btn.deselect()
 
-    btn_save = Button(frame_buttons, text="Сохранить выбор")
+    btn_save = Button(frame_buttons, text="Сохранить и выйти", command=on_click)
     btn_save.pack(side=LEFT)
-    btn_exit = Button(frame_buttons, text="Закрыть окно")
-    btn_exit.pack(side=LEFT)
 
     # Настраиваем модальность
     modal_window.transient(root)    # Связываем с главным окном
