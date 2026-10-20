@@ -288,11 +288,11 @@ def update_guide_dialog():
 
     # Создание сайзера
     frame_progress = Frame(progress_window)
-    frame_progress.pack(fill="x", padx=10, pady=5)
+    frame_progress.pack(fill="x", padx=5, pady=5)
     
-    # Создание метки
+    # Создание метки для вывода цифровых значений индикатора прогресса
     label = Label(frame_progress, text="Загрузка...")
-    label.pack(pady=10)
+    label.pack(pady=5)
 
     # Создание индикатора загрузки
     progress_bar = ttk.Progressbar(
@@ -301,7 +301,7 @@ def update_guide_dialog():
         length=300,
         mode='determinate'  # Определённый режим (точный прогресс)
     )
-    progress_bar.pack(pady=10)
+    progress_bar.pack(pady=5)
 
     # Кнопка для запуска загрузки
     # start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
@@ -318,7 +318,8 @@ def update_guide_dialog():
 
     
 def update_guide(win, pb, lb):
-    # Обновление справочника валют
+    # Обновление справочника валют. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
+    # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса
     pb['value'] = 0  # Сброс индикатора
     win.update_idletasks()  # Принудительное обновление интерфейса
 
