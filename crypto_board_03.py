@@ -291,8 +291,8 @@ def update_guide_dialog():
     frame_progress.pack(fill="x", padx=10, pady=5)
     
     # Создание метки
-    label = Label(frame_progress, text="Загрузка...")
-    label.pack(pady=10)
+    # label = Label(frame_progress, text="Загрузка...")
+    # label.pack(pady=10)
 
     # Создание индикатора загрузки
     progress_bar = ttk.Progressbar(
