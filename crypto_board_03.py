@@ -261,7 +261,7 @@ def update_favor():
         mb.showerror("Ошибка", f"При попытке открыть файл {FAVOURITES_ID_FNAME} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
     if fav_id != '':
         # data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
-        data = response(FAVOURITES_COINS, {"id": fav_id}, (10, 30)) # Делаем запрос к сайту по выбранным валютам
+        data = response(FAVOURITES_COINS, params={"id": fav_id}, timeout=(10, 30)) # Делаем запрос к сайту по выбранным валютам
         save_json_safely(data.json(), FAVOURITES_COINS_FNAME)
         time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
         try:
@@ -279,13 +279,13 @@ def update_guide():
     pass
 
 
-def response(url, prm, tm):
+def response(*args, **kwargs):
     # Формирует запрос к серверу и возвращает данные в формате JSON. Параметры: url - адрес сервера,
     # prm - параметры запроса, tm - кортеж с максимальным временем ожидания соединения с сервером и
     # максимальным временем ожидания получения данных
     try:
-        r = requests.get(url, params=prm, timeout=tm)   # Формируем запрос и получаем данные
-        r.raise_for_status()                            # выбросит HTTPError для кодов 4xx/5xx
+        r = requests.get(*args, **kwargs)   # Формируем запрос и получаем данные
+        r.raise_for_status()                # выбросит HTTPError для кодов 4xx/5xx
         return r
     except requests.Timeout:
         mb.showerror("Ошибка", "Запрос превысил время ожидания")
