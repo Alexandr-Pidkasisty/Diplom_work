@@ -6,6 +6,7 @@ import os
 import requests
 from datetime import datetime
 import pickle
+import time
 
 
 def quit():
@@ -126,7 +127,7 @@ def open_modal():
 
     def chk_btn_changed():
         nonlocal sel_ind_flag
-        print(chk_btn_var.get())
+        # print(chk_btn_var.get())
         sel_ind_flag = chk_btn_var.get()
         
     def on_select(event):
@@ -163,7 +164,7 @@ def open_modal():
 
     # Читаем из файла флаг
     sel_ind_flag = load_pickle_safely("data/sel_ind_flag.cfg")
-    print("To read", sel_ind_flag)
+    # print("To read", sel_ind_flag)
     
     # Создаём дочернее модальное окно с настройками.
     modal_window = Toplevel(root)
@@ -228,7 +229,7 @@ def open_modal():
 
     # Сохраняем выбор "Выделять избранные монеты при последующем открытии окна"
     save_pickle_safely(sel_ind_flag, "data/sel_ind_flag.cfg")
-    print("saved", sel_ind_flag)
+    # print("saved", sel_ind_flag)
 
     # Формируем список идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
@@ -276,9 +277,46 @@ def update_favor():
         mb.showerror("Ошибка", "Не выбрано ни одной валюты")
 
 
+def update_guide_dialog():
+    # Диалог для запуска процедуры обновления справочника валют
+    rsansw = mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?")
+    if rsansw:
+        update_guide()
+    else:
+        return
+
+
 def update_guide():
     # Обновление справочника валют
-    pass
+    r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
+    if r == None:
+        return
+    ass_data = r.json()["data"]
+    ass_info = r.json()["info"]["coins_num"]
+    count = ass_info // 100
+    rest = ass_info % 100
+
+    # for i in range(1, count):
+    for i in range(1, 3):  # Временное ограничение, чтобы не загружать надолго
+        # r = requests.get("https://api.coinlore.net/api/tickers/", params={"start":i * 100, "limit":100})
+        r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
+        tmp_ass = r.json()["data"]
+        ass_data = ass_data + tmp_ass
+        print(f" {i}: start from {i * 100} finished")
+        time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
+
+    if rest != 0:
+        # r = requests.get("https://api.coinlore.net/api/tickers/", params={"start":count, "limit":rest})
+        r = response(REQUEST_TOTAL_COINS, params={"start":count, "limit":rest}, timeout=(10, 30))
+        tmp_ass = r.json()["data"]
+        ass_data = ass_data + tmp_ass
+        print(f" rest finished")
+    
+    # Сортировка по имени
+    sorted_ass = sorted(ass_data, key=lambda x: x["name"])
+
+    # Сохраняем в файл, чтобы не делать запросы слишком часто
+    save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
 
 
 def response(*args, **kwargs):
@@ -302,10 +340,6 @@ def response(*args, **kwargs):
         # Сюда попадут любые другие ошибки requests
         mb.showerror(f"Произошла ошибка при запросе: {e}")
         return None
-
-def update_dict():
-    # Обновляет Словарь монет.
-    pass
 
 
 """ Основной текст программы """
@@ -352,7 +386,7 @@ settings_menu.add_command(label="Выход", command=quit)
 update_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Обновление", menu=update_menu)
 update_menu.add_command(label='Избранное', command=update_favor)
-update_menu.add_command(label='Справочник монет', command=update_guide)
+update_menu.add_command(label='Справочник монет', command=update_guide_dialog)
 
 # Создаем виджеты в главном окне
 create_labels()
