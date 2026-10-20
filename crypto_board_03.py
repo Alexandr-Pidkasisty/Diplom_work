@@ -260,7 +260,8 @@ def update_favor():
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {FAVOURITES_ID_FNAME} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
     if fav_id != '':
-        data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
+        # data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
+        data = response(FAVOURITES_COINS, {"id": fav_id}, (10, 30)) # Делаем запрос к сайту по выбранным валютам
         save_json_safely(data.json(), FAVOURITES_COINS_FNAME)
         time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
         try:
@@ -278,6 +279,29 @@ def update_guide():
     pass
 
 
+def response(url, prm, tm):
+    # Формирует запрос к серверу и возвращает данные в формате JSON. Параметры: url - адрес сервера,
+    # prm - параметры запроса, tm - кортеж с максимальным временем ожидания соединения с сервером и
+    # максимальным временем ожидания получения данных
+    try:
+        r = requests.get(url, params=prm, timeout=tm)   # Формируем запрос и получаем данные
+        r.raise_for_status()                            # выбросит HTTPError для кодов 4xx/5xx
+        return r
+    except requests.Timeout:
+        mb.showerror("Ошибка", "Запрос превысил время ожидания")
+        return None
+    except requests.ConnectionError:
+        mb.showerror("Ошибка", "Не удалось соединиться с сервером")
+        return None
+    except requests.HTTPError as e:
+        mb.showerror(f"HTTP-ошибка: {e.r.status_code}")
+        return None
+    except requests.RequestException as e:
+        # Сюда попадут любые другие ошибки requests
+        mb.showerror(f"Произошла ошибка при запросе: {e}")
+        return None
+
+
 """ Основной текст программы """
 
 
@@ -290,7 +314,8 @@ FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с ид
 TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
 SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк
-REQUEST_TOTAL_COINS ="https://api.coinlore.net/api/tickers/"  # Адрес для запроса
+REQUEST_TOTAL_COINS ="https://api.coinlore.net/api/tickers/"    # Адрес запроса для всех монет
+FAVOURITES_COINS = "https://api.coinlore.net/api/ticker/"       # Адрес запроса по выбранным монетам     
 
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
