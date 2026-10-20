@@ -13,8 +13,8 @@ print(f"Всего монет: {ass_info}")
 print(f"Число запросов: {count}")
 print(f"Остаток {rest}")
 
-for i in range(1, count):
-# for i in range(1, 3):
+# for i in range(1, count):
+for i in range(1, 3):
     r = requests.get("https://api.coinlore.net/api/tickers/", params={"start":i * 100, "limit":100})
     tmp_ass = r.json()["data"]
     ass_data = ass_data + tmp_ass
