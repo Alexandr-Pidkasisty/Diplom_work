@@ -262,6 +262,8 @@ def update_favor():
     if fav_id != '':
         # data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
         data = response(FAVOURITES_COINS, params={"id": fav_id}, timeout=(10, 30)) # Делаем запрос к сайту по выбранным валютам
+        if data == None:    # Если запрос неудачный, то
+            return          # функция завершает работу
         save_json_safely(data.json(), FAVOURITES_COINS_FNAME)
         time_stamp = datetime.now().strftime("%d.%m.%Y %H:%M")
         try:
@@ -300,6 +302,10 @@ def response(*args, **kwargs):
         # Сюда попадут любые другие ошибки requests
         mb.showerror(f"Произошла ошибка при запросе: {e}")
         return None
+
+def update_dict():
+    # Обновляет Словарь монет.
+    pass
 
 
 """ Основной текст программы """
