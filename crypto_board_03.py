@@ -304,17 +304,17 @@ def update_guide_dialog():
     progress_bar.pack(pady=10)
 
     # Кнопка для запуска загрузки
-    start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
-    start_button.pack(pady=10)
+    # start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
+    # start_button.pack(pady=10)
 
-    # Запускаем обновление справочника валют
-    # update_guide(progress_window, progress_bar)
+    # Запускаем функцию через 100 миллисекунд после создания окна
+    progress_window.after(100, lambda : update_guide(progress_window, progress_bar))
 
     # Настраиваем окно
     progress_window.transient(root)    # Связываем с главным окном
     # progress_window.grab_set()         # Захватываем ввод
     # progress_window.focus_set()        # Переводим фокус на окно
-    progress_window.wait_window()      # Ждём закрытия окна
+    # progress_window.wait_window()      # Ждём закрытия окна
 
     
 def update_guide(win, pb):
@@ -356,6 +356,9 @@ def update_guide(win, pb):
 
     # Сохраняем в файл, чтобы не делать запросы слишком часто
     save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
+
+    # Закрываем окно с индикатором прогресса
+    win.destroy()
 
 
 def response(*args, **kwargs):
