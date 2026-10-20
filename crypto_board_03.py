@@ -280,37 +280,76 @@ def update_favor():
 def update_guide_dialog():
     # Диалог для запуска процедуры обновления справочника валют
     rsansw = mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?")
-    if rsansw:
-        update_guide()
-    else:
+    if not rsansw:
         return
+    # Создаем окно для отображения Индикатора прогресса
+    progress_window = Toplevel(root)
+    progress_window.title("Обновление справочника")
 
+    # Создание сайзера
+    frame_progress = Frame(progress_window)
+    frame_progress.pack(fill="x", padx=10, pady=5)
+    
+    # Создание метки
+    label = Label(frame_progress, text="Загрузка...")
+    label.pack(pady=10)
 
-def update_guide():
+    # Создание индикатора загрузки
+    progress_bar = ttk.Progressbar(
+        frame_progress,
+        orient='horizontal',
+        length=300,
+        mode='determinate'  # Определённый режим (точный прогресс)
+    )
+    progress_bar.pack(pady=10)
+
+    # Кнопка для запуска загрузки
+    start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
+    start_button.pack(pady=10)
+
+    # Запускаем обновление справочника валют
+    # update_guide(progress_window, progress_bar)
+
+    # Настраиваем окно
+    progress_window.transient(root)    # Связываем с главным окном
+    # progress_window.grab_set()         # Захватываем ввод
+    # progress_window.focus_set()        # Переводим фокус на окно
+    progress_window.wait_window()      # Ждём закрытия окна
+
+    
+def update_guide(win, pb):
     # Обновление справочника валют
+    pb['value'] = 0  # Сброс индикатора
+    win.update_idletasks()  # Принудительное обновление интерфейса
+
     r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
     if r == None:
         return
     ass_data = r.json()["data"]
-    ass_info = r.json()["info"]["coins_num"]
+    # ass_info = r.json()["info"]["coins_num"]
+    ass_info = 350  # Для отладки
+
     count = ass_info // 100
     rest = ass_info % 100
+    pb.config(maximum=count)  # Максимальное значение индикатора
 
-    # for i in range(1, count):
-    for i in range(1, 3):  # Временное ограничение, чтобы не загружать надолго
-        # r = requests.get("https://api.coinlore.net/api/tickers/", params={"start":i * 100, "limit":100})
+    for i in range(1, count):
         r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
         print(f" {i}: start from {i * 100} finished")
+        pb['value'] = i  # Обновление значения
+        win.update_idletasks()  # Обновление интерфейса
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
     if rest != 0:
-        # r = requests.get("https://api.coinlore.net/api/tickers/", params={"start":count, "limit":rest})
         r = response(REQUEST_TOTAL_COINS, params={"start":count, "limit":rest}, timeout=(10, 30))
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
         print(f" rest finished")
+        pb['value'] = 3  # Обновление значения
+        win.update_idletasks()  # Обновление интерфейса
+    # label.config(text="Загрузка завершена")  # Обновление метки после завершения
     
     # Сортировка по имени
     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
