@@ -291,8 +291,8 @@ def update_guide_dialog():
     frame_progress.pack(fill="x", padx=10, pady=5)
     
     # Создание метки
-    # label = Label(frame_progress, text="Загрузка...")
-    # label.pack(pady=10)
+    label = Label(frame_progress, text="Загрузка...")
+    label.pack(pady=10)
 
     # Создание индикатора загрузки
     progress_bar = ttk.Progressbar(
@@ -308,7 +308,7 @@ def update_guide_dialog():
     # start_button.pack(pady=10)
 
     # Запускаем функцию через 100 миллисекунд после создания окна
-    progress_window.after(100, lambda : update_guide(progress_window, progress_bar))
+    progress_window.after(100, lambda : update_guide(progress_window, progress_bar, label))
 
     # Настраиваем окно
     progress_window.transient(root)    # Связываем с главным окном
@@ -317,7 +317,7 @@ def update_guide_dialog():
     # progress_window.wait_window()      # Ждём закрытия окна
 
     
-def update_guide(win, pb):
+def update_guide(win, pb, lb):
     # Обновление справочника валют
     pb['value'] = 0  # Сброс индикатора
     win.update_idletasks()  # Принудительное обновление интерфейса
@@ -339,6 +339,7 @@ def update_guide(win, pb):
         ass_data = ass_data + tmp_ass
         print(f" {i}: start from {i * 100} finished")
         pb['value'] = i  # Обновление значения
+        lb.config(text=f"Загружено {i * 100} монет")
         win.update_idletasks()  # Обновление интерфейса
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
@@ -348,7 +349,9 @@ def update_guide(win, pb):
         ass_data = ass_data + tmp_ass
         print(f" rest finished")
         pb['value'] = 3  # Обновление значения
+        lb.config(text=f"Загружено {ass_info} монет")
         win.update_idletasks()  # Обновление интерфейса
+        time.sleep(2) # Задержка 2 сек., чтобы подержать индикатор
     # label.config(text="Загрузка завершена")  # Обновление метки после завершения
     
     # Сортировка по имени
