@@ -1,0 +1,1 @@
+pyinstaller --name=cryptoboard --icon=My_web_01.ico --onefile --noconsole --add-data "data/*.*:data_dist" crypto_board_03.py
