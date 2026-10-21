@@ -7,6 +7,9 @@ import requests
 from datetime import datetime
 import pickle
 import time
+import queue
+from functools import partial
+import threading
 
 
 def quit():
@@ -286,6 +289,9 @@ def update_guide_dialog():
     progress_window = Toplevel(root)
     progress_window.title("Обновление справочника")
 
+    # Создаём очередь для обмена данными
+    q = queue.Queue()
+
     # Создание сайзера
     frame_progress = Frame(progress_window)
     frame_progress.pack(fill="x", padx=5, pady=5)
@@ -303,12 +309,20 @@ def update_guide_dialog():
     )
     progress_bar.pack(pady=5)
 
+    # Связываем обработчик события
+    progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar))
+
+    # Запускаем поток
+    t = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
+    # t.start()
+
     # Кнопка для запуска загрузки
     # start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
     # start_button.pack(pady=10)
 
     # Запускаем функцию через 100 миллисекунд после создания окна
-    progress_window.after(100, lambda : update_guide(progress_window, progress_bar, label))
+    # progress_window.after(100, lambda : update_guide(progress_window, progress_bar, label))
+    progress_window.after(100, lambda : t.start())
 
     # Настраиваем окно
     progress_window.transient(root)    # Связываем с главным окном
@@ -316,7 +330,61 @@ def update_guide_dialog():
     # progress_window.focus_set()        # Переводим фокус на окно
     # progress_window.wait_window()      # Ждём закрытия окна
 
+
+def worker_in_thread(win, q, pb, lb):
+    # Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
+    # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
+    # очередь для обмена данными.
+    r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
+    if r == None:
+        return
+    ass_data = r.json()["data"]
+    # ass_info = r.json()["info"]["coins_num"]
+    ass_info = 550  # Для отладки
     
+    count = ass_info // 100
+    rest = ass_info % 100
+    pb.config(maximum=count)  # Максимальное значение индикатора
+    q.put(1)
+    # Генерируем событие для обновления виджета
+    win.event_generate('<<Updated>>', when='tail')
+
+    for i in range(1, count):
+        r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
+        tmp_ass = r.json()["data"]
+        ass_data = ass_data + tmp_ass
+        print(f" {i}: start from {i * 100} finished")
+        q.put(i + 1)
+        lb.config(text=f"Загружено {i * 100} монет")
+        win.event_generate('<<Updated>>', when='tail')
+        time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
+
+    if rest != 0:
+        r = response(REQUEST_TOTAL_COINS, params={"start":count, "limit":rest}, timeout=(10, 30))
+        tmp_ass = r.json()["data"]
+        ass_data = ass_data + tmp_ass
+        print(f" rest finished")
+        q.put(i + 1)
+        lb.config(text=f"Загружено {ass_info} монет")
+        win.event_generate('<<Updated>>', when='tail')
+        time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
+
+    # Сортировка по имени
+    sorted_ass = sorted(ass_data, key=lambda x: x["name"])
+
+    # Сохраняем в файл, чтобы не делать запросы слишком часто
+    save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
+
+    # Закрываем окно с индикатором прогресса
+    win.destroy()
+# worker_in_thread
+
+def on_update(event, q, pb):
+    # Получаем значение из очереди и обновляем прогресс-бар
+    pb['value'] = q.get()
+# on_update
+
+
 def update_guide(win, pb, lb):
     # Обновление справочника валют. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса
