@@ -284,7 +284,7 @@ def update_guide_dialog():
     # Диалог для запуска процедуры обновления справочника валют
     rsansw = mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?")
     if not rsansw:
-        return
+        return          # Если запрос неудачен, то выход
     # Создаем окно для отображения Индикатора прогресса
     progress_window = Toplevel(root)
     progress_window.title("Обновление справочника")
@@ -329,6 +329,7 @@ def update_guide_dialog():
     # progress_window.grab_set()         # Захватываем ввод
     # progress_window.focus_set()        # Переводим фокус на окно
     # progress_window.wait_window()      # Ждём закрытия окна
+# update_guide_dialog
 
 
 def worker_in_thread(win, q, pb, lb):
