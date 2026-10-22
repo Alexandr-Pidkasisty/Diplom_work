@@ -112,7 +112,7 @@ def load_json_safely(filename):
         with open(filename, 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
-        mb.showerror("Информация", f"Файл {filename} не найден")  # Возвращает список (None "ok")
+        mb.showerror("Ошибка", f"Файл {filename} не найден")  # Возвращает список (None "ok")
         return None 
     except json.JSONDecodeError:
         mb.showerror("Ошибка", "Ошибка декодирования JSON")   # Возвращает список (None "ok")
@@ -132,28 +132,16 @@ def load_pickle_safely(filename):
         return None
 
 
-def open_modal():
+def on_favourites():
     selected_indices = set()  # Множество для хранения списка выбранных индексом
     sel_buffer = []           # Буфер для хранения списка выделенных элементов виджета lb
     sel_ind_flag = False      # Флаг отображения выбранных индексов при открытии окна modal_window
 
     def chk_btn_changed():
         nonlocal sel_ind_flag
-        # print(chk_btn_var.get())
         sel_ind_flag = chk_btn_var.get()
         
     def on_select(event):
-        # Функция устанавливает новые значения для множества selected_indices
-        nonlocal selected_indices  # Оъявляем переменную не локальной, доступной для изменения
-        # selected_indices = set(event.widget.curselection())
-        if how_to_set.get():
-            selected_indices.update(event.widget.curselection())
-        else:
-            selected_indices.clear
-            selected_indices = set(event.widget.curselection())
-
-
-    def on_select1(event):
         # Функция сохраняет список выделенных элементов виджета lb в буфере
         nonlocal sel_buffer
         sel_buffer = event.widget.curselection()
@@ -172,7 +160,6 @@ def open_modal():
 
     # Читаем из файла большой перечень валют и сохраняем в переменную tot_coins
     tot_coins = load_json_safely(TOTAL_COINS_FNAME)
-    print("tot_coins=", tot_coins)
     if tot_coins == None:
         return   # Если файл не найден, то выход из функции
 
@@ -198,7 +185,7 @@ def open_modal():
     frame_rbtn.pack(fill="x", padx=10, pady=5)
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
-    frame_buttons = Frame(modal_window, bg="grey")
+    frame_buttons = Frame(modal_window)
     frame_buttons.pack(fill="x", padx=10, pady=5)
 
     # Создаем метку с общим числом монет
@@ -228,10 +215,10 @@ def open_modal():
             lb.select_set(i)                        # Этот элемент выделяется
 
     # Обработка события изменения выбора элементов lb
-    lb.bind("<<ListboxSelect>>", on_select1)
+    lb.bind("<<ListboxSelect>>", on_select)
 
     chk_btn_var = BooleanVar(value=sel_ind_flag)
-    chk_btn = Checkbutton(frame_modal_w, text="Выделять избранные монеты при последующем открытии окна", variable=chk_btn_var,
+    chk_btn = Checkbutton(frame_modal_w, text="Выделять избранное при\nпоследующем открытии окна", justify="left", anchor="w", variable=chk_btn_var,
                           onvalue=True, offvalue=False, command=chk_btn_changed)
     chk_btn.pack(side=LEFT, padx=5)
     # chk_btn.deselect()
@@ -250,7 +237,6 @@ def open_modal():
 
     # Сохраняем выбор "Выделять избранные монеты при последующем открытии окна"
     save_pickle_safely(sel_ind_flag, "data/sel_ind_flag.cfg")
-    # print("saved", sel_ind_flag)
 
     # Формируем список идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
@@ -268,7 +254,7 @@ def open_modal():
     # Обновляем избранные валюты и перерисовывам главное окно
     update_favor()
 
-# def open_modal1
+# def on_favourites1
     
 
 def update_favor():
@@ -361,12 +347,10 @@ def worker_in_thread(win, q, pb, lb):
     ass_data = r.json()["data"]
     # ass_info = r.json()["info"]["coins_num"]
     ass_info = 450  # Для отладки
-    print("Всего монет: ", ass_info)
     
     count = ass_info // 100
     rest = ass_info % 100
     max_count = count if rest == 0 else count + 1  # Вычисляем maximum для ProgressBar
-    print("max_count = ", max_count)
     # pb.config(maximum=count)  # Максимальное значение индикатора
     q.put((1, max_count))
     # lb.config(text=f"Загружено 100 монет")
@@ -378,7 +362,6 @@ def worker_in_thread(win, q, pb, lb):
         r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
-        print(f" {i}: start from {i * 100 + 100} finished")
         q.put((i + 1, max_count))
         # lb.config(text=f"Загружено {i * 100 + 100} монет")
         win.event_generate('<<Updated>>', when='tail')
@@ -388,7 +371,6 @@ def worker_in_thread(win, q, pb, lb):
         r = response(REQUEST_TOTAL_COINS, params={"start":count * 100, "limit":rest}, timeout=(10, 30))
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
-        print(f" {count}: start from {count * 100 + rest} finished")
         q.put((max_count, max_count))
         # lb.config(text=f"Загружено {count * 100 + rest} монет")
         win.event_generate('<<Updated>>', when='tail')
@@ -409,58 +391,8 @@ def on_update(event, q, pb, lb):
     tmp = q.get()
     pb['value'] = tmp[0]
     pb['maximum'] = tmp[1]
-    # print("tmp= ", tmp)
     lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")
 # on_update
-
-
-# def update_guide(win, pb, lb):
-#     # Обновление справочника валют. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
-#     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса
-#     print("Работает функция update_guide")
-#     pb['value'] = 0  # Сброс индикатора
-#     win.update_idletasks()  # Принудительное обновление интерфейса
-
-#     r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
-#     if r == None:
-#         return
-#     ass_data = r.json()["data"]
-#     # ass_info = r.json()["info"]["coins_num"]
-#     ass_info = 350  # Для отладки
-
-#     count = ass_info // 100
-#     rest = ass_info % 100
-#     pb.config(maximum=count)  # Максимальное значение индикатора
-
-#     for i in range(1, count):
-#         r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
-#         tmp_ass = r.json()["data"]
-#         ass_data = ass_data + tmp_ass
-#         print(f" {i}: start from {i * 100} finished")
-#         pb['value'] = i  # Обновление значения
-#         lb.config(text=f"Загружено {i * 100} монет")
-#         win.update_idletasks()  # Обновление интерфейса
-#         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
-
-#     if rest != 0:
-#         r = response(REQUEST_TOTAL_COINS, params={"start":count, "limit":rest}, timeout=(10, 30))
-#         tmp_ass = r.json()["data"]
-#         ass_data = ass_data + tmp_ass
-#         print(f" rest finished")
-#         pb['value'] = 3  # Обновление значения
-#         lb.config(text=f"Загружено {ass_info} монет")
-#         win.update_idletasks()  # Обновление интерфейса
-#         time.sleep(2) # Задержка 2 сек., чтобы подержать индикатор
-#     # label.config(text="Загрузка завершена")  # Обновление метки после завершения
-    
-#     # Сортировка по имени
-#     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
-
-#     # Сохраняем в файл, чтобы не делать запросы слишком часто
-#     save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
-
-#     # Закрываем окно с индикатором прогресса
-#     win.destroy()
 
 
 def response(*args, **kwargs):
@@ -523,7 +455,7 @@ root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label='Панель', menu=settings_menu)
-settings_menu.add_command(label="Выбрать монеты", command=open_modal)
+settings_menu.add_command(label="Выбрать монеты", command=on_favourites)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
 
