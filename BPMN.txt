@@ -1,0 +1,7 @@
+Рисование блок-схем
+https://demo.bpmn.io/s/start
+
+Рисование алгоритмов
+https://app.diagrams.net
+
+Все сохраняется в мой google.disc
