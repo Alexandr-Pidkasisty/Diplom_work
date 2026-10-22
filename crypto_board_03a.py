@@ -310,7 +310,7 @@ def update_guide_dialog():
     progress_bar.pack(pady=5)
 
     # Связываем обработчик события
-    progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar))
+    progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar, lb=label))
 
     # Запускаем поток
     t = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
@@ -351,7 +351,7 @@ def worker_in_thread(win, q, pb, lb):
     print("max_count = ", max_count)
     # pb.config(maximum=count)  # Максимальное значение индикатора
     q.put((1, max_count))
-    lb.config(text=f"Загружено 100 монет")
+    # lb.config(text=f"Загружено 100 монет")
     # Генерируем событие для обновления виджета
     win.event_generate('<<Updated>>', when='tail')
     time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
@@ -362,7 +362,7 @@ def worker_in_thread(win, q, pb, lb):
         ass_data = ass_data + tmp_ass
         print(f" {i}: start from {i * 100 + 100} finished")
         q.put((i + 1, max_count))
-        lb.config(text=f"Загружено {i * 100 + 100} монет")
+        # lb.config(text=f"Загружено {i * 100 + 100} монет")
         win.event_generate('<<Updated>>', when='tail')
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
@@ -372,7 +372,7 @@ def worker_in_thread(win, q, pb, lb):
         ass_data = ass_data + tmp_ass
         print(f" {count}: start from {count * 100 + rest} finished")
         q.put((max_count, max_count))
-        lb.config(text=f"Загружено {count * 100 + rest} монет")
+        # lb.config(text=f"Загружено {count * 100 + rest} монет")
         win.event_generate('<<Updated>>', when='tail')
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
@@ -386,12 +386,13 @@ def worker_in_thread(win, q, pb, lb):
     win.destroy()
 # worker_in_thread
 
-def on_update(event, q, pb):
+def on_update(event, q, pb, lb):
     # Получаем значение из очереди и обновляем прогресс-бар
     tmp = q.get()
     pb['value'] = tmp[0]
     pb['maximum'] = tmp[1]
-    print("tmp= ", tmp)
+    # print("tmp= ", tmp)
+    lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")
 # on_update
 
 
