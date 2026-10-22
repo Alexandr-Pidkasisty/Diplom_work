@@ -42,7 +42,7 @@ def clear_frame_root():
         for widget in frame_footer.winfo_children():    # Если виджеты есть,
             widget.destroy()                            # то удаляем их
 
-def create_labels():
+def on_dashboard():
     # Функция создания виджетов в главном окне: выводятся избранные криптовалюты и их курсы
     global FAVOURITES_COINS_FNAME
     global time_stamp
@@ -69,6 +69,7 @@ def create_labels():
                 justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
     label_upd = Label(frame_footer, text=f"Последнее обновление: {time_stamp}")
     label_upd.pack(side=RIGHT, pady=5, padx=5)
+# on_dashboard
 
 
 def save_pickle_safely(data, filename):
@@ -275,7 +276,7 @@ def update_favor():
                 f.write(time_stamp)
         except Exception as e:
             mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
-        create_labels()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
+        on_dashboard()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
     else:
         mb.showerror("Ошибка", "Не выбрано ни одной валюты")
 
@@ -515,7 +516,7 @@ update_menu.add_command(label='Избранное', command=update_favor)
 update_menu.add_command(label='Справочник монет', command=update_guide_dialog)
 
 # Создаем виджеты в главном окне
-create_labels()
+on_dashboard()
 
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
