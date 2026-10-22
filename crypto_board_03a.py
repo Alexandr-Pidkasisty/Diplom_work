@@ -503,7 +503,7 @@ menu_bar = Menu(root)
 root.config(menu=menu_bar)
 
 settings_menu = Menu(menu_bar, tearoff=0)
-menu_bar.add_cascade(label='Настройки', menu=settings_menu)
+menu_bar.add_cascade(label='Панель', menu=settings_menu)
 settings_menu.add_command(label="Выбрать монеты", command=open_modal)
 settings_menu.add_separator()
 settings_menu.add_command(label="Выход", command=quit)
