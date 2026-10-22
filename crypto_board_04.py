@@ -175,12 +175,14 @@ def open_modal():
     print("tot_coins=", tot_coins)
     if tot_coins == None:
         return   # Если файл не найден, то выход из функции
+
+    # Читаем из файла индексы избранных валют и сохраняем в переменную selected_indices
     sel_buffer = load_pickle_safely(SELECTED_INDS)
     if sel_buffer != None:
         selected_indices = set(sel_buffer)
     sel_buffer = []
 
-    # Читаем из файла флаг
+    # Читаем из файла флаг отображения выбранных индексов при открытии окна
     sel_ind_flag = load_pickle_safely("data/sel_ind_flag.cfg")
     if sel_ind_flag == None:
         sel_ind_flag = False
