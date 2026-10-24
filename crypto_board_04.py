@@ -47,28 +47,27 @@ def on_dashboard():
     global FAVOURITES_COINS_FNAME
     global time_stamp
     clear_frame_root()  # Очищаем главное окно от виджетов
-    favourites = load_json_safely(FAVOURITES_COINS_FNAME)
+    favourites = load_json_safely(FAVOURITES_COINS_FNAME) # Загружаем избранное
     if favourites == None:
         return
     try:
-        with open(TIME_STAMP_FNAME, 'r', encoding='utf-8') as f:
+        with open(TIME_STAMP_FNAME, 'r', encoding='utf-8') as f:  # Загружаем штамп времени
             time_stamp = f.read()
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
-    if (favourites)  != None:
-        Label(frame_root, text="Наименование", compound=LEFT, width=30, 
-            justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
-        Label(frame_root, text="Символ", compound=LEFT, width=10, 
-            justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
-        Label(frame_root, text="Стоимость", compound=LEFT, width=15, 
-            justify="left", anchor="e").grid(row=0, column=2, padx=5, pady=5, sticky ="w")
-        for i, coin in enumerate(favourites):                                  
-            Label(frame_root, text=f"{coin["name"]}", compound=LEFT, width=30, 
-                justify="left", anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w")
-            Label(frame_root, text=f"{coin["symbol"]}", compound=LEFT, width=10, 
-                justify="left", anchor="w").grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
-            Label(frame_root, text=f"${coin["price_usd"]}", compound=LEFT, width=15, 
-                justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
+    Label(frame_root, text="Наименование", compound=LEFT, width=30, 
+        justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
+    Label(frame_root, text="Символ", compound=LEFT, width=10, 
+        justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
+    Label(frame_root, text="Стоимость", compound=LEFT, width=15, 
+        justify="left", anchor="e").grid(row=0, column=2, padx=5, pady=5, sticky ="w")
+    for i, coin in enumerate(favourites): # Выводим информацию об избранных монетах                                 
+        Label(frame_root, text=f"{coin["name"]}", compound=LEFT, width=30, 
+            justify="left", anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w")
+        Label(frame_root, text=f"{coin["symbol"]}", compound=LEFT, width=10, 
+            justify="left", anchor="w").grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
+        Label(frame_root, text=f"${coin["price_usd"]}", compound=LEFT, width=15, 
+            justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
     label_upd = Label(frame_footer, text=f"Последнее обновление: {time_stamp}")
     label_upd.pack(side=RIGHT, pady=5, padx=5)
 # on_dashboard
