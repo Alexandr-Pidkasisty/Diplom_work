@@ -169,7 +169,7 @@ def on_favourites():
     sel_buffer = []
 
     # Читаем из файла флаг отображения выбранных индексов при открытии окна
-    sel_ind_flag = load_pickle_safely("data/sel_ind_flag.cfg")
+    sel_ind_flag = load_pickle_safely(FAVOURITES_VIEW)
     if sel_ind_flag == None:
         sel_ind_flag = False
     
@@ -220,7 +220,6 @@ def on_favourites():
     chk_btn = Checkbutton(frame_modal_w, text="Выделять избранное при\nпоследующем открытии окна", justify="left", anchor="w", variable=chk_btn_var,
                           onvalue=True, offvalue=False, command=chk_btn_changed)
     chk_btn.pack(side=LEFT, padx=5)
-    # chk_btn.deselect()
 
     btn_save = Button(frame_buttons, text="Сохранить и выйти", command=on_click)
     btn_save.pack(side=LEFT)
@@ -235,7 +234,7 @@ def on_favourites():
     save_pickle_safely(selected_indices, SELECTED_INDS)
 
     # Сохраняем выбор "Выделять избранные монеты при последующем открытии окна"
-    save_pickle_safely(sel_ind_flag, "data/sel_ind_flag.cfg")
+    save_pickle_safely(sel_ind_flag, FAVOURITES_VIEW)
 
     # Формируем список идентификаторов избранных валют
     for i, coin in enumerate(tot_coins):
@@ -430,7 +429,8 @@ TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с да
 var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
 SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк
 REQUEST_TOTAL_COINS ="https://api.coinlore.net/api/tickers/"    # Адрес запроса для всех монет
-FAVOURITES_COINS = "https://api.coinlore.net/api/ticker/"       # Адрес запроса по выбранным монетам     
+FAVOURITES_COINS = "https://api.coinlore.net/api/ticker/"       # Адрес запроса по выбранным монетам
+FAVOURITES_VIEW = "data/sel_ind_flag.cfg"            # Имя файла для флага выделения избранного
 
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
