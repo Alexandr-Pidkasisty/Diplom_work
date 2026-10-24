@@ -55,7 +55,7 @@ def on_dashboard():
             time_stamp = f.read()
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
-    if (favourites[0])  != None:
+    if (favourites)  != None:
         Label(frame_root, text="Наименование", compound=LEFT, width=30, 
             justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
         Label(frame_root, text="Символ", compound=LEFT, width=10, 
