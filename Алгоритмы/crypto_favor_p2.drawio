@@ -1,0 +1,155 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="Ce9YhgE3UBDJ6ZnMSDRJ" name="Страница-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-66" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6zNh9oFEQTaJ8CB8sI2D-4" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=offPageConnector;rounded=0;size=0.5;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="60" width="60" x="384" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-58" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-56" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6zNh9oFEQTaJ8CB8sI2D-5" parent="1" style="html=1;strokeWidth=2;shape=manualInput;boundedLbl=1;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" value="Выбрать и выделить монеты в списке" vertex="1">
+          <mxGeometry height="80" width="100" x="465" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="6zNh9oFEQTaJ8CB8sI2D-7" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.663;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="6zNh9oFEQTaJ8CB8sI2D-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6zNh9oFEQTaJ8CB8sI2D-8" parent="1" style="html=1;strokeWidth=2;shape=manualInput;boundedLbl=1;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" value="Выбрать флаг &quot;Добавить&quot; или &quot;Заменить&quot;" vertex="1">
+          <mxGeometry height="80" width="100" x="240" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="6zNh9oFEQTaJ8CB8sI2D-9" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.663;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="6zNh9oFEQTaJ8CB8sI2D-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-53" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-1" parent="1" style="html=1;strokeWidth=2;shape=manualInput;boundedLbl=1;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" value="Выбрать флаг отображения избранных монет" vertex="1">
+          <mxGeometry height="80" width="100" x="575" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-65" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-2" parent="1" style="html=1;strokeWidth=2;shape=manualInput;boundedLbl=1;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" value="Нажать кнопку &quot;Сохранить и выйти&quot;" vertex="1">
+          <mxGeometry height="80" width="100" x="240" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-3" parent="1" style="html=1;strokeWidth=2;shape=manualInput;boundedLbl=1;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" value="Закрыть окно&lt;div&gt;без сохранения&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="100" x="465" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-4" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.01;entryY=0.638;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-5" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.01;entryY=0.675;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-2">
+          <mxGeometry relative="1" x="-0.0144" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-11" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="veJCd5lJ6lZnKGWxyipO-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-12" connectable="0" parent="veJCd5lJ6lZnKGWxyipO-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Заменить" vertex="1">
+          <mxGeometry relative="1" x="-0.0095" y="2" as="geometry">
+            <mxPoint x="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-13" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="veJCd5lJ6lZnKGWxyipO-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-14" connectable="0" parent="veJCd5lJ6lZnKGWxyipO-13" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Добавить" vertex="1">
+          <mxGeometry relative="1" x="0.2" y="-2" as="geometry">
+            <mxPoint x="35" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-7" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Добавить&lt;div&gt;или&lt;/div&gt;&lt;div&gt;Заменить?&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="100" x="240" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-24" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Заменить индексы в буфере" vertex="1">
+          <mxGeometry height="50" width="130" x="138" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-25" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Добавить индексы в буфере" vertex="1">
+          <mxGeometry height="50" width="130" x="312" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-38" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Закрыть модальное окно" vertex="1">
+          <mxGeometry height="50" width="130" x="225" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-42" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-41" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить флаг отображения избранного в файл" vertex="1">
+          <mxGeometry height="50" width="130" x="225" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-30" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 2&lt;div&gt;Стоп&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="460" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-33" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-30">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="140" />
+              <mxPoint x="710" y="1100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-39" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-26" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-37" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить индексы&lt;div&gt;избранного в файл&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="130" x="225" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-45" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-44" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сформировать список идентификаторов монет и строку запроса к серверу" vertex="1">
+          <mxGeometry height="70" width="130" x="225" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-47" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-46" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить строку запроса к серверу в файл" vertex="1">
+          <mxGeometry height="50" width="130" x="225" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Вызвать функцию обновления избранных монет&lt;div&gt;и перерисовать&lt;div&gt;главное окно&lt;/div&gt;&lt;/div&gt;&lt;div&gt;(Схема 3)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="130" x="225" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-48" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-54" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-26">
+          <mxGeometry relative="1" x="0.0202" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-51" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="&lt;div&gt;Флаг&lt;/div&gt;&lt;div&gt;отображения&lt;/div&gt;&lt;div&gt;монет&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="570" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-59" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-56" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="&lt;div&gt;Индексы&lt;/div&gt;&lt;div&gt;избранных&lt;/div&gt;&lt;div&gt;монет&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="460" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-61" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="&lt;div&gt;Флаг&lt;/div&gt;&lt;div&gt;Добавления&lt;/div&gt;&lt;div&gt;/ Замены&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="80" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-64" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-67" edge="1" parent="1" source="6zNh9oFEQTaJ8CB8sI2D-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.572;entryY=0.03;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="veJCd5lJ6lZnKGWxyipO-61">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
