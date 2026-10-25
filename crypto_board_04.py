@@ -316,14 +316,8 @@ def update_guide_dialog():
 
     # Запускаем поток
     t = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
-    # t.start()
-
-    # Кнопка для запуска загрузки
-    # start_button = Button(frame_progress, text="Начать загрузку", command=lambda : update_guide(progress_window, progress_bar))
-    # start_button.pack(pady=10)
 
     # Запускаем функцию через 100 миллисекунд после создания окна
-    # progress_window.after(100, lambda : update_guide(progress_window, progress_bar, label))
     progress_window.after(100, lambda : t.start())
     
 
@@ -343,8 +337,8 @@ def worker_in_thread(win, q, pb, lb):
     if r == None:
         return
     ass_data = r.json()["data"]
-    # ass_info = r.json()["info"]["coins_num"]
-    ass_info = 450  # Для отладки
+    ass_info = r.json()["info"]["coins_num"]  # Для постоянной работы
+    # ass_info = 450  # Для отладки
     
     count = ass_info // 100
     rest = ass_info % 100
@@ -378,7 +372,8 @@ def worker_in_thread(win, q, pb, lb):
     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
 
     # Сохраняем в файл, чтобы не делать запросы слишком часто
-    save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
+    with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
+        save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
 
     # Закрываем окно с индикатором прогресса
     win.destroy()
@@ -434,6 +429,7 @@ FAVOURITES_VIEW = "data/sel_ind_flag.cfg"            # Имя файла для 
 
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
+locker = threading.Lock()                            # Объект блокировки ресурсов
 
 # Главное окно программы
 root = Tk()
