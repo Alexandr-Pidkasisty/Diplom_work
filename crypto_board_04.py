@@ -333,12 +333,13 @@ def worker_in_thread(win, q, pb, lb):
     # Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
     # очередь для обмена данными.
+    global locker
     r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
     if r == None:
         return
     ass_data = r.json()["data"]
-    ass_info = r.json()["info"]["coins_num"]  # Для постоянной работы
-    # ass_info = 450  # Для отладки
+    # ass_info = r.json()["info"]["coins_num"]  # Для постоянной работы
+    ass_info = 450  # Для отладки
     
     count = ass_info // 100
     rest = ass_info % 100
