@@ -90,12 +90,14 @@ def save_pickle_safely(data, filename):
 
 def save_json_safely(data, filename):
     # Функция сериализует данные из data в файл с именем filename
+    global locker
     try:
         # Создаём директорию, если её нет
         os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
-        # Сохраняем файл
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+        with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
+            # Сохраняем файл
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
         return True
     except TypeError as e:
         mb.showerror("Ошибка", f"Ошибка типа данных: {str(e)}")
@@ -107,9 +109,11 @@ def save_json_safely(data, filename):
 
 def load_json_safely(filename):
     # Функция возвращает данные из файла с именем filename
+    global locker
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            return json.load(f)
+        with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
+            with open(filename, 'r', encoding='utf-8') as f:
+                return json.load(f)
     except FileNotFoundError:
         mb.showerror("Ошибка", f"Файл {filename} не найден")  # Возвращает список (None "ok")
         return None 
@@ -333,7 +337,6 @@ def worker_in_thread(win, q, pb, lb):
     # Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
     # очередь для обмена данными.
-    global locker
     r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
     if r == None:
         return
@@ -373,8 +376,7 @@ def worker_in_thread(win, q, pb, lb):
     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
 
     # Сохраняем в файл, чтобы не делать запросы слишком часто
-    with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
-        save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
+    save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
 
     # Закрываем окно с индикатором прогресса
     win.destroy()
