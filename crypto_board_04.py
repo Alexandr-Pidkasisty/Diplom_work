@@ -12,8 +12,11 @@ from functools import partial
 import threading
 
 
-def quit():
-    root.destroy()
+def quit(event = None):
+    if thrd:                # Если запущен поток, то
+        stop_event.set()    # устанавливаем флаг останова потока
+        thrd.join()         # ожидаем окончания работы потока
+    root.destroy()          # Закрываем главное окно и завершаем работу программы
 
 
 def hide_menu(event):
@@ -287,6 +290,7 @@ def update_favor():
 
 
 def update_guide_dialog():
+    global thrd
     # Диалог для запуска процедуры обновления справочника валют
     rsansw = mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?")
     if not rsansw:
@@ -319,10 +323,10 @@ def update_guide_dialog():
     progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar, lb=label))
 
     # Запускаем поток
-    t = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
+    thrd = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
 
     # Запускаем функцию через 100 миллисекунд после создания окна
-    progress_window.after(100, lambda : t.start())
+    progress_window.after(100, lambda : thrd.start())
     
 
     # Настраиваем окно
@@ -337,12 +341,14 @@ def worker_in_thread(win, q, pb, lb):
     # Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
     # очередь для обмена данными.
+    if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
+        return
     r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
     if r == None:
         return
     ass_data = r.json()["data"]
-    # ass_info = r.json()["info"]["coins_num"]  # Для постоянной работы
-    ass_info = 450  # Для отладки
+    ass_info = r.json()["info"]["coins_num"]  # Для постоянной работы
+    # ass_info = 450  # Для отладки
     
     count = ass_info // 100
     rest = ass_info % 100
@@ -355,6 +361,8 @@ def worker_in_thread(win, q, pb, lb):
     time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
     for i in range(1, count):
+        if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
+            return
         r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
@@ -363,6 +371,8 @@ def worker_in_thread(win, q, pb, lb):
         win.event_generate('<<Updated>>', when='tail')
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
+    if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
+        return
     if rest != 0:
         r = response(REQUEST_TOTAL_COINS, params={"start":count * 100, "limit":rest}, timeout=(10, 30))
         tmp_ass = r.json()["data"]
@@ -417,22 +427,22 @@ def response(*args, **kwargs):
 """ Основной текст программы """
 
 
-# root_scr_size = [620, 520]            # начальный размер корневого окна
-menu_flag = True                        # флаг видимости рамки, строки заголовка и меню окна
-MAIN_ICON = 'My_web_01.ico'
+MAIN_ICON = 'My_web_01.ico'                          # Имя файла с иконкой программы
 TOTAL_COINS_FNAME ='data/total_coins.json'           # Имя файла с полным списком валют
 FAVOURITES_COINS_FNAME = 'data/indices_coins.json'   # Имя файла со справочником избранных валют
 FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
 TIME_STAMP_FNAME = 'data/time_update.cfg'            # Имя файла с датой и временем последнего обновления
-var_chb_filename = "data/var_chb.json"               # Имя файла для флагов избранного
-SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк
+SELECTED_INDS = "data/selected_indices.cfg"          # Имя файла с номерами выбранных строк для Listbox
 REQUEST_TOTAL_COINS ="https://api.coinlore.net/api/tickers/"    # Адрес запроса для всех монет
 FAVOURITES_COINS = "https://api.coinlore.net/api/ticker/"       # Адрес запроса по выбранным монетам
 FAVOURITES_VIEW = "data/sel_ind_flag.cfg"            # Имя файла для флага выделения избранного
 
+menu_flag = True                                     # флаг видимости рамки, строки заголовка и меню окна
 fav_id = ''                                          # Строка с индексами избранных валют
 time_stamp = ''                                      # Текущее время
 locker = threading.Lock()                            # Объект блокировки ресурсов
+thrd = None                                          # Переменная для потока обновления Справочника валют
+stop_event = threading.Event()                       # Флаг останова потока
 
 # Главное окно программы
 root = Tk()
@@ -467,5 +477,8 @@ on_dashboard()
 
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
+
+# Связываем событие закрытия окна с вызовом функции quit
+root.protocol("WM_DELETE_WINDOW", quit)
 
 root.mainloop()
