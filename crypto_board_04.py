@@ -266,14 +266,13 @@ def update_favor():
     global fav_id
     global time_stamp
     global FAVOURITES_ID_FNAME
-    # Обновление избранных крниптовалют
+    # Обновление избранных криптовалют
     try:
         with open(FAVOURITES_ID_FNAME, 'r', encoding='utf-8') as f:
             fav_id = f.read()
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {FAVOURITES_ID_FNAME} произошла ошибка {e}.\nВ меню \'Настройки/Справочник\' выберите отслеживаемые валюты")
     if fav_id != '':
-        # data = requests.get("https://api.coinlore.net/api/ticker/", params={"id": fav_id})  # Делаем запрос к сайту по выбранным валютам
         data = response(FAVOURITES_COINS, params={"id": fav_id}, timeout=(10, 30)) # Делаем запрос к сайту по выбранным валютам
         if data == None:    # Если запрос неудачный, то
             return          # функция завершает работу
