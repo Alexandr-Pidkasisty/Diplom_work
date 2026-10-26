@@ -424,6 +424,32 @@ def response(*args, **kwargs):
         return None
 
 
+def on_timer(period):
+    # Создает таймер и помещает его в поток. С периодичностью, заданной в параметрах (period),
+    # функция посылает событие event_time
+    def worker():
+        # ФУнкция для работы в потоке
+        nonlocal period
+        # Получаем текущее время и преобразовываем его в int
+        dt = datetime.now()
+        timestamp = int(dt.timestamp())  # Целое число секунд
+        # Отправляем событие в главный поток
+        root.event_generate("<<event_time>>", when='tail', state=timestamp)
+        # Задержка перед следующим обновлением
+        time.sleep(period)
+        # Создаем замыкание
+        worker()
+    # Запускаем поток
+    thread = threading.Thread(target=worker, daemon=True)
+    thread.start()
+
+
+# Привязываем обработчик события
+def on_event(event):
+    dt = datetime.fromtimestamp(event.state)
+    print(f"Вызываем функцию update_favor {dt}")
+
+
 """ Основной текст программы """
 
 
@@ -478,7 +504,13 @@ on_dashboard()
 # Двойной клик по окну скрывает рамку, строку заголовка и меню окна
 root.bind("<Double-Button-1>", lambda event: hide_menu(event) if menu_flag else show_menu(event))
 
+# Обработка события таймера
+root.bind("<<event_time>>", on_event)
+
 # Связываем событие закрытия окна с вызовом функции quit
 root.protocol("WM_DELETE_WINDOW", quit)
+
+# Запускаем таймер
+on_timer(600)  # Пока поставили таймер на каждые 10 минут 
 
 root.mainloop()
