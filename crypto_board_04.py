@@ -295,8 +295,10 @@ def update_guide_dialog():
         global stop_event, thrd
         nonlocal progress_window 
         if thrd:                    # Если запущен поток, то
-            stop_event.set()        # устанавливаем флаг останова потока
-            thrd.join()             # ожидаем окончания работы потока
+            stop_event.set()        # устанавливаем флаг останова потока в True,
+            thrd.join()             # ожидаем окончания работы потока,
+            stop_event.clear()      # устанавливаем флаг останова потока в False,
+            thrd = None             # и устанавливаем указатель в None
         progress_window.destroy()   # Закрываем главное окно и завершаем работу программы
 
     # Диалог для запуска процедуры обновления справочника валют
