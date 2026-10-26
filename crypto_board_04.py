@@ -259,7 +259,7 @@ def on_favourites():
     # Обновляем избранные валюты и перерисовывам главное окно
     update_favor()
 
-# def on_favourites1
+# def on_favourites
     
 
 def update_favor():
@@ -287,6 +287,7 @@ def update_favor():
         on_dashboard()  # Перерисовываем виджеты главного окна. В будущем сделать обновление, а не перерисовку
     else:
         mb.showerror("Ошибка", "Не выбрано ни одной валюты")
+# update_favor
 
 
 def update_guide_dialog():
