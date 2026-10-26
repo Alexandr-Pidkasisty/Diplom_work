@@ -288,13 +288,22 @@ def update_favor():
         mb.showerror("Ошибка", "Не выбрано ни одной валюты")
 # update_favor
 
-
 def update_guide_dialog():
     global thrd
+
+    def progress_window_quit(event=None):
+        global stop_event, thrd
+        nonlocal progress_window 
+        if thrd:                    # Если запущен поток, то
+            stop_event.set()        # устанавливаем флаг останова потока
+            thrd.join()             # ожидаем окончания работы потока
+        progress_window.destroy()   # Закрываем главное окно и завершаем работу программы
+
     # Диалог для запуска процедуры обновления справочника валют
     rsansw = mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?")
     if not rsansw:
         return          # Если запрос неудачен, то выход
+    update_menu.entryconfig("Справочник монет", state="disabled") # Делаем пункт меню неактивным до следующего запуска программы
     # Создаем окно для отображения Индикатора прогресса
     progress_window = Toplevel(root)
     progress_window.title("Обновление справочника")
@@ -328,9 +337,9 @@ def update_guide_dialog():
     # Запускаем функцию через 100 миллисекунд после создания окна
     progress_window.after(100, lambda : thrd.start())
     
-
     # Настраиваем окно
     progress_window.transient(root)    # Связываем с главным окном
+    progress_window.protocol("WM_DELETE_WINDOW", progress_window_quit)
     # progress_window.grab_set()         # Захватываем ввод
     # progress_window.focus_set()        # Переводим фокус на окно
     # progress_window.wait_window()      # Ждём закрытия окна
@@ -511,6 +520,6 @@ root.bind("<<event_time>>", on_event)
 root.protocol("WM_DELETE_WINDOW", quit)
 
 # Запускаем таймер
-on_timer(600)  # Пока поставили таймер на каждые 10 минут 
+# on_timer(600)  # Пока поставили таймер на каждые 10 минут 
 
 root.mainloop()
