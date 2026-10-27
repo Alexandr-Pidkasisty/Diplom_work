@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox as mb
 from tkinter import ttk
+from tkinter import simpledialog
 import json
 import os
 import requests
@@ -11,8 +12,16 @@ import queue
 from functools import partial
 import threading
 
+def interruptible_sleep(secs):
+        # Функция сна, стостоящая из коротких периодов для оперативного реагирования на сигнал останова
+        start_time = time.time()    # Определяем текущее время
+        # Если период меньше заданного и не установлен флаг останова
+        while (time.time() - start_time < secs) and (not d_stop_event.is_set()):  
+            time.sleep(0.1)         # Засыпаем на короткий промежуток времени
+
 
 def quit(event = None):
+    print("thrd= ", thrd)
     if thrd:                # Если запущен поток, то
         stop_event.set()    # устанавливаем флаг останова потока
         thrd.join()         # ожидаем окончания работы потока
@@ -436,29 +445,75 @@ def response(*args, **kwargs):
 
 
 def on_timer(period):
-    # Создает таймер и помещает его в поток. С периодичностью, заданной в параметрах (period),
+    # Создает таймер и помещает его в поток. С периодичностью, заданной в секундах, параметр period,
     # функция посылает событие event_time
+    global dem_th
+    # def worker():
+    #     # ФУнкция для работы в потоке
+    #     nonlocal period
+    #     # Получаем текущее время и преобразовываем его в int
+    #     dt = datetime.now()
+    #     timestamp = int(dt.timestamp())  # Целое число секунд
+    #     # Отправляем событие в главный поток
+    #     root.event_generate("<<event_time>>", when='tail', state=timestamp)
+    #     # Задержка перед следующим обновлением
+    #     time.sleep(period)
+    #     # Создаем замыкание
+    #     worker()
+    
+        
     def worker():
-        # ФУнкция для работы в потоке
+        # Таймер для работы в фоновом потоке
         nonlocal period
-        # Получаем текущее время и преобразовываем его в int
-        dt = datetime.now()
-        timestamp = int(dt.timestamp())  # Целое число секунд
-        # Отправляем событие в главный поток
-        root.event_generate("<<event_time>>", when='tail', state=timestamp)
-        # Задержка перед следующим обновлением
-        time.sleep(period)
-        # Создаем замыкание
-        worker()
+        while not d_stop_event.is_set():  # Выполняет цикл, пока не установлен флаг останова
+            # Получаем текущее время и преобразовываем его в int
+            dt = datetime.now()
+            timestamp = int(dt.timestamp())  # Целое число секунд
+            # Отправляем событие в главный поток
+            root.event_generate("<<event_time>>", when='tail', state=timestamp)
+            # Задержка перед следующим обновлением
+            # time.sleep(period)
+            interruptible_sleep(period)
     # Запускаем поток
-    thread = threading.Thread(target=worker, daemon=True)
-    thread.start()
+    dem_th = threading.Thread(target=worker, daemon=True)
+    dem_th.start()
+# on_timer
 
 
-# Привязываем обработчик события
 def on_event(event):
+    # Обработчик события таймера. По сигналу таймера запускает заданную функцию
     dt = datetime.fromtimestamp(event.state)
-    print(f"Вызываем функцию update_favor {dt}")
+    print(f"Вызываем функцию update_favor {dt}")  # Заданная функция
+
+
+def on_menu_timer():
+    # Функция управляет запуском и остановом таймера для обновления Избранного
+    global dem_th, d_stop_event
+    if dem_th == None:  # Если поток обновления избранного не запущен, то вызываем диалог для ввода периода таймера
+        ptime = simpledialog.askinteger("Таймер", "Задайте период обновления\nизбранного в минутах:", initialvalue=0, minvalue=0, maxvalue=240)
+        if ptime is not None:
+            if 0 < ptime:
+                on_timer(ptime * 60)  # Запуксаем таймер с периодом согнала ptime * 60 секунд
+                mb.showinfo("Таймер", f"Таймер запущен с периодом срабатывания {ptime} минут")
+                return
+            else:
+                mb.showinfo("Таймер", f"Таймер не установлен. Нельзя запустить\nтаймер с нулевым периодом срабатывания")
+                return
+        else:
+            return
+    else:
+        answer = mb.askyesno("Таймер", "Вы хотите прервать работу таймера?")
+        if answer:                  # Если ответ "ДА", то:
+            d_stop_event.set()      # устанавливаем флаг останова потока
+            dem_th.join()           # дожидаемся останова потока обновления избранного
+            dem_th = None           # обновляем переменную потока
+            d_stop_event.clear()    # очищаем флаг останова
+            mb.showinfo("Таймер", "Таймер остановлен")
+            return
+        else:
+            return
+# on_menu_timer
+
 
 
 """ Основной текст программы """
@@ -479,7 +534,9 @@ fav_id = ''                                          # Строка с инде�
 time_stamp = ''                                      # Текущее время
 locker = threading.Lock()                            # Объект блокировки ресурсов
 thrd = None                                          # Переменная для потока обновления Справочника валют
-stop_event = threading.Event()                       # Флаг останова потока
+stop_event = threading.Event()                       # Флаг останова потока обновления Справочника валют
+dem_th = None                                        # Переменная для потока обновления Избранного
+d_stop_event = threading.Event()                     # Флаг останова потока обновления Избранного
 
 # Главное окно программы
 root = Tk()
@@ -506,7 +563,9 @@ settings_menu.add_command(label="Выход", command=quit)
 
 update_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Обновление", menu=update_menu)
+update_menu.add_command(label='Таймер избранного', command=on_menu_timer)
 update_menu.add_command(label='Избранное', command=update_favor)
+update_menu.add_separator()
 update_menu.add_command(label='Справочник монет', command=update_guide_dialog)
 
 # Создаем виджеты в главном окне
