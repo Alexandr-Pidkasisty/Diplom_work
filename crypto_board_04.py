@@ -80,17 +80,21 @@ def on_dashboard():
 
 def save_pickle_safely(data, filename):
     # Функция преобразует объект в байтовый поток и сериализует поток в файл с именем filename
+    global locker
     try:
         # Создаём директорию, если её нет
         os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
-        # Сохраняем файл
-        with open(filename, 'wb') as f:
-            pickle.dump(data, f)
-        return True, 'Ok'
+        with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
+            # Сохраняем файл
+            with open(filename, 'wb') as f:
+                pickle.dump(data, f)
+        return True
     except (PermissionError, OSError) as e:
-        return False, mb.showerror("Ошибка", f"Ошибка записи файла: {str(e)}")
+        mb.showerror("Ошибка", f"Ошибка записи файла: {str(e)}")
+        return False
     except Exception as e:
-        return False, mb.showerror("Ошибка", f"Ошибка: {str(e)}")
+        mb.showerror("Ошибка", f"Ошибка: {str(e)}")
+        return False
 
 
 def save_json_safely(data, filename):
@@ -130,8 +134,9 @@ def load_json_safely(filename):
 def load_pickle_safely(filename):
     # Функция возвращает байтовые данные из файла с именем filename
     try:
-        with open(filename, 'rb') as f:
-            return pickle.load(f)
+        with locker: # Устанавливаем блокировку перед критической секцией (во избежания конфликтов за ресурсы)
+            with open(filename, 'rb') as f:
+                return pickle.load(f)
     except FileNotFoundError:
         mb.showerror("Информация", f"Файл {filename} не найден")  # Возвращает список (None "ok")
         return None
@@ -441,7 +446,7 @@ def on_timer(period):
     # Создает таймер и помещает его в поток. С периодичностью, заданной в секундах, параметр period,
     # функция посылает событие event_time
     global dem_th
-    
+
     def interruptible_sleep(secs):
         # Функция сна, стостоящая из коротких периодов для оперативного реагирования на сигнал останова
         start_time = time.time()    # Определяем текущее время
