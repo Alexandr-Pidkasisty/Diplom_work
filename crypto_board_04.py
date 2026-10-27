@@ -398,7 +398,6 @@ def worker_in_thread(win, q, pb, lb):
         q.put((max_count, max_count))
         # lb.config(text=f"Загружено {count * 100 + rest} монет")
         win.event_generate('<<Updated>>', when='tail')
-        time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
     # Сортировка по имени
     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
@@ -464,7 +463,6 @@ def on_timer(period):
             # Отправляем событие в главный поток
             root.event_generate("<<event_time>>", when='tail', state=timestamp)
             # Задержка перед следующим обновлением
-            # time.sleep(period)
             interruptible_sleep(period)
     # Запускаем поток
     dem_th = threading.Thread(target=worker, daemon=True)
