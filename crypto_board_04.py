@@ -475,7 +475,7 @@ def on_timer(period):
 def on_event(event):
     # Обработчик события таймера. По сигналу таймера запускает заданную функцию
     dt = datetime.fromtimestamp(event.state)
-    print(f"Вызываем функцию update_favor {dt}")  # Заданная функция
+    update_favor()  # Заданная функция
 
 
 def on_menu_timer():
