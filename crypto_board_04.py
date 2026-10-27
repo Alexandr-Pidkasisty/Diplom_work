@@ -12,13 +12,6 @@ import queue
 from functools import partial
 import threading
 
-def interruptible_sleep(secs):
-        # Функция сна, стостоящая из коротких периодов для оперативного реагирования на сигнал останова
-        start_time = time.time()    # Определяем текущее время
-        # Если период меньше заданного и не установлен флаг останова
-        while (time.time() - start_time < secs) and (not d_stop_event.is_set()):  
-            time.sleep(0.1)         # Засыпаем на короткий промежуток времени
-
 
 def quit(event = None):
     print("thrd= ", thrd)
@@ -448,19 +441,13 @@ def on_timer(period):
     # Создает таймер и помещает его в поток. С периодичностью, заданной в секундах, параметр period,
     # функция посылает событие event_time
     global dem_th
-    # def worker():
-    #     # ФУнкция для работы в потоке
-    #     nonlocal period
-    #     # Получаем текущее время и преобразовываем его в int
-    #     dt = datetime.now()
-    #     timestamp = int(dt.timestamp())  # Целое число секунд
-    #     # Отправляем событие в главный поток
-    #     root.event_generate("<<event_time>>", when='tail', state=timestamp)
-    #     # Задержка перед следующим обновлением
-    #     time.sleep(period)
-    #     # Создаем замыкание
-    #     worker()
     
+    def interruptible_sleep(secs):
+        # Функция сна, стостоящая из коротких периодов для оперативного реагирования на сигнал останова
+        start_time = time.time()    # Определяем текущее время
+        # Если период меньше заданного и не установлен флаг останова
+        while (time.time() - start_time < secs) and (not d_stop_event.is_set()):  
+            time.sleep(0.1)         # Засыпаем на короткий промежуток времени
         
     def worker():
         # Таймер для работы в фоновом потоке
