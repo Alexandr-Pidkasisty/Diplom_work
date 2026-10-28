@@ -379,7 +379,6 @@ def worker_in_thread(win, q, pb, lb):
     count = ass_info // 100
     rest = ass_info % 100
     max_count = count if rest == 0 else count + 1  # Вычисляем maximum для ProgressBar
-    # pb.config(maximum=count)  # Максимальное значение индикатора
     q.put((1, max_count))
     # Генерируем событие для обновления виджета
     win.event_generate('<<Updated>>', when='tail')
@@ -392,7 +391,6 @@ def worker_in_thread(win, q, pb, lb):
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
         q.put((i + 1, max_count))
-        # lb.config(text=f"Загружено {i * 100 + 100} монет")
         win.event_generate('<<Updated>>', when='tail')
         time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
 
@@ -403,7 +401,6 @@ def worker_in_thread(win, q, pb, lb):
         tmp_ass = r.json()["data"]
         ass_data = ass_data + tmp_ass
         q.put((max_count, max_count))
-        # lb.config(text=f"Загружено {count * 100 + rest} монет")
         win.event_generate('<<Updated>>', when='tail')
 
     # Сортировка по имени
