@@ -61,18 +61,18 @@ def on_dashboard():
     except Exception as e:
         mb.showerror("Ошибка", f"При попытке открыть файл {TIME_STAMP_FNAME} произошла ошибка {e}")
     Label(frame_root, text="Наименование", compound=LEFT, width=30, 
-        justify="left", anchor="w").grid(row=0, column=0, padx=5, pady=5, sticky ="w")
+        justify="left", anchor="w").grid(row=0, column=0, padx=(5,0), pady=5, sticky ="w")
     Label(frame_root, text="Символ", compound=LEFT, width=10, 
-        justify="left", anchor="w").grid(row=0, column=1, padx=5, pady=5, sticky ="w")
+        justify="left", anchor="w").grid(row=0, column=1, padx=(5,0), pady=5, sticky ="w")
     Label(frame_root, text="Стоимость", compound=LEFT, width=15, 
         justify="left", anchor="e").grid(row=0, column=2, padx=5, pady=5, sticky ="w")
     for i, coin in enumerate(favourites): # Выводим информацию об избранных монетах                                 
         Label(frame_root, text=f"{coin["name"]}", compound=LEFT, width=30, 
-            justify="left", anchor="w").grid(row=i+1, column=0, padx=5, pady=5, sticky ="w")
+            justify="left", anchor="w").grid(row=i+1, column=0, padx=(5,0), pady=(0,5), sticky ="w")
         Label(frame_root, text=f"{coin["symbol"]}", compound=LEFT, width=10, 
-            justify="left", anchor="w").grid(row=i+1, column=1, padx=5, pady=5, sticky ="w")
+            justify="left", anchor="w").grid(row=i+1, column=1, padx=(5,0), pady=(0,5), sticky ="w")
         Label(frame_root, text=f"${coin["price_usd"]}", compound=LEFT, width=15, 
-            justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=5, sticky ="w")
+            justify="left", anchor="e").grid(row=i+1, column=2, padx=5, pady=(0,5), sticky ="w")
     label_upd = Label(frame_footer, text=f"Последнее обновление: {time_stamp}")
     label_upd.pack(side=RIGHT, pady=5, padx=5)
 # on_dashboard
