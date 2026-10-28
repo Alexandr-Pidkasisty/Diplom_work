@@ -9,7 +9,6 @@ from datetime import datetime
 import pickle
 import time
 import queue
-from functools import partial
 import threading
 
 
@@ -348,7 +347,7 @@ def update_guide_dialog():
     progress_bar.pack(pady=5)
 
     # Связываем обработчик события
-    progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar, lb=label))
+    progress_window.bind('<<Updated>>', lambda e, qu=q, pb=progress_bar, lb=label: on_update(e, qu, pb, lb))
     progress_window.bind('<<Event_close_window>>', progress_window_quit)
 
     # Запускаем поток
