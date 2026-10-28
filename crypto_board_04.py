@@ -349,6 +349,7 @@ def update_guide_dialog():
 
     # Связываем обработчик события
     progress_window.bind('<<Updated>>', partial(on_update, q=q, pb=progress_bar, lb=label))
+    progress_window.bind('<<Event_close_window>>', progress_window_quit)
 
     # Запускаем поток
     thrd = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
@@ -411,8 +412,8 @@ def worker_in_thread(win, q, pb, lb):
     # Сохраняем в файл, чтобы не делать запросы слишком часто
     save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
 
-    # Закрываем окно с индикатором прогресса
-    win.destroy()
+    # Генерируем событие для закрытия окна с индикатором прогресса
+    win.event_generate('<<Event_close_window>>', when='tail')
 # worker_in_thread
 
 def on_update(event, q, pb, lb):
