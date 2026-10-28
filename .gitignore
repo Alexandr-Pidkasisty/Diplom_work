@@ -10,3 +10,5 @@ dist/
 .spec
 data/
 data_coins
+cryptoboard/
+cryptoboard.spec
