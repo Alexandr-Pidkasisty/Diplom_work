@@ -380,7 +380,6 @@ def worker_in_thread(win, q, pb, lb):
     max_count = count if rest == 0 else count + 1  # Вычисляем maximum для ProgressBar
     # pb.config(maximum=count)  # Максимальное значение индикатора
     q.put((1, max_count))
-    # lb.config(text=f"Загружено 100 монет")
     # Генерируем событие для обновления виджета
     win.event_generate('<<Updated>>', when='tail')
     time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
