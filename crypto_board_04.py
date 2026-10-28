@@ -305,6 +305,7 @@ def update_favor():
 # update_favor
 
 def update_guide_dialog():
+    # Функция обновления Справочника криптовалют
     global thrd
 
     def progress_window_quit(event=None):
@@ -358,9 +359,6 @@ def update_guide_dialog():
     # Настраиваем окно
     progress_window.transient(root)    # Связываем с главным окном
     progress_window.protocol("WM_DELETE_WINDOW", progress_window_quit)
-    # progress_window.grab_set()         # Захватываем ввод
-    # progress_window.focus_set()        # Переводим фокус на окно
-    # progress_window.wait_window()      # Ждём закрытия окна
 # update_guide_dialog
 
 
