@@ -1,0 +1,83 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="ApJ43nyUB6KjG0HXGj20">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EwMq1hjsRm42nZar6GGH-3" edge="1" parent="1" source="4CzEDXI0I5eW-_lTKkg5-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4CzEDXI0I5eW-_lTKkg5-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 4&lt;div&gt;Старт&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="364" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;labelPerimeter=1;" value="Выбран пункт&lt;div&gt;меню &quot;Избранное&quot;&lt;/div&gt;&lt;div&gt;(обновление&lt;/div&gt;&lt;div&gt;избранного)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="50" x="464" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-5" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Прочитать из файла идентификаторы избранных монет&amp;nbsp;" vertex="1">
+          <mxGeometry height="50" width="170" x="329" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-7" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Получить от сервера свежие данные по избранным монетам" vertex="1">
+          <mxGeometry height="50" width="170" x="329" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-9" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-10" connectable="0" parent="EwMq1hjsRm42nZar6GGH-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Да" vertex="1">
+          <mxGeometry relative="1" x="0.24" y="-2" as="geometry">
+            <mxPoint x="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-6" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Данные получены?" vertex="1">
+          <mxGeometry height="100" width="100" x="364" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-12" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить данные в файл" vertex="1">
+          <mxGeometry height="50" width="170" x="329" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-14" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Получить текущее время&lt;div&gt;(дд.мм.гг чч:мм)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="329" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-16" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить штамп времени в файле" vertex="1">
+          <mxGeometry height="50" width="170" x="329" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-18" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="EwMq1hjsRm42nZar6GGH-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Вызвать функцию перерисовки дашборда&lt;div&gt;(Схема 1)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="329" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-17" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 4&lt;div&gt;Стоп&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="364" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-19" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="EwMq1hjsRm42nZar6GGH-21">
+          <mxGeometry relative="1" x="-0.4049" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-20" connectable="0" parent="EwMq1hjsRm42nZar6GGH-19" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Нет" vertex="1">
+          <mxGeometry relative="1" x="-0.7113" y="-2" as="geometry">
+            <mxPoint y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-21" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" value="&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;Не выбрано&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(#000000, var(--ge-light-color, #ffffff));&quot;&gt;ни одной валюты&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="130" x="560" y="385" as="geometry" />
+        </mxCell>
+        <mxCell id="EwMq1hjsRm42nZar6GGH-22" edge="1" parent="1" source="EwMq1hjsRm42nZar6GGH-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="EwMq1hjsRm42nZar6GGH-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
