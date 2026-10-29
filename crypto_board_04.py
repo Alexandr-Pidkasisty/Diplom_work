@@ -573,7 +573,4 @@ root.bind("<<event_time>>", on_event)
 # Связываем событие закрытия окна с вызовом функции quit
 root.protocol("WM_DELETE_WINDOW", quit)
 
-# Запускаем таймер
-# on_timer(600)  # Пока поставили таймер на каждые 10 минут 
-
 root.mainloop()
