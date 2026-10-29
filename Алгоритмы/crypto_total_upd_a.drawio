@@ -1,0 +1,93 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="KwfStZaHKNA91WIxKKEO" name="Страница-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-2" edge="1" parent="1" source="LzPOGk6Egzo7tAxonyfG-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LzPOGk6Egzo7tAxonyfG-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 3&lt;div&gt;Старт&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="294.5" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LzPOGk6Egzo7tAxonyfG-2" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;labelPerimeter=1;" value="Выбран пункт&lt;div&gt;меню &quot;Обновить/&lt;/div&gt;&lt;div&gt;Справочник&quot;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="50" x="394.5" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-4" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.display;whiteSpace=wrap;" value="Предупредить о длительности&lt;div&gt;операции. Запросить подтверждение&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="154" x="267.5" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-6" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-7" connectable="0" parent="Lt-sgdzRZgyVBOxl9vS0-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;defaultLabelBackgroundColor=page;" value="Да" vertex="1">
+          <mxGeometry relative="1" x="-0.2083" y="3" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-3" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Начать обновление?" vertex="1">
+          <mxGeometry height="100" width="100" x="294.5" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-9" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сделать пункт меню &quot;Обновить Справочник&quot; неактивным" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-11" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Создать окно индикатора прогресса. Установить текстовую метку и прогрессбар" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-13" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Создать переменную с очередью для обмена данными с другим потоком" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-15" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Создать обработчик события изменения окна индикатора прогресса" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-17" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-16" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Создать обработчик события закрытия окна индикатора прогресса" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-20" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Запустить фоновый поток с функцией обновления справочника" vertex="1">
+          <mxGeometry height="50" width="180" x="535" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-24" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="Lt-sgdzRZgyVBOxl9vS0-23" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-18" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.flowchart.parallel_mode;accentColor=#ffff00;pointerEvents=1;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="40" width="370" x="165" y="748" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-19" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 3&lt;div&gt;Стоп&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="575" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-21" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.761;entryY=-0.07;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Lt-sgdzRZgyVBOxl9vS0-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Работа функции&lt;div&gt;обновления Справочника&lt;div&gt;Схема 7&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="180" x="260" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-28" edge="1" parent="1" source="Lt-sgdzRZgyVBOxl9vS0-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;entryX=0.244;entryY=-0.054;entryDx=0;entryDy=0;entryPerimeter=0;" target="Lt-sgdzRZgyVBOxl9vS0-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Lt-sgdzRZgyVBOxl9vS0-25" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="Флаг останова&lt;div&gt;потока&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="165" y="645" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

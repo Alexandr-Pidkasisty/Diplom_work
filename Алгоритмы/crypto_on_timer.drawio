@@ -1,0 +1,74 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="BvO9CFQ40J6jSCCPCIAq" name="Страница-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-26" edge="1" parent="1" source="A_MvC4_ma4XlUiSsmLK9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A_MvC4_ma4XlUiSsmLK9-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 6&lt;div&gt;Старт&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="268" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-30" edge="1" parent="1" source="A_MvC4_ma4XlUiSsmLK9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;entryX=0.238;entryY=0.025;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="6OlS0HwxHVeLaS1nAZj1-1" value="">
+          <mxGeometry relative="1" x="-0.1223" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-31" edge="1" parent="1" source="A_MvC4_ma4XlUiSsmLK9-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="A_MvC4_ma4XlUiSsmLK9-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Создать фоновый поток.&lt;div&gt;Запустить в режиме демона&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="233" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-5" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="6OlS0HwxHVeLaS1nAZj1-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="565" y="380" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-32" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-1" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.flowchart.parallel_mode;accentColor=#ffff00;pointerEvents=1;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="40" width="361" x="390" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-23" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-4" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.loop_limit;whiteSpace=wrap;" value="Цикл продолжается, пока&lt;div&gt;не установлен флаг останова&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="170" x="485.25" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-13" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-10" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="Сгенерировать&lt;div&gt;событие таймера&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="170" x="485.75" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-18" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="6OlS0HwxHVeLaS1nAZj1-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Заснуть на указанный&lt;div&gt;период&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="485.75" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-29" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="A_MvC4_ma4XlUiSsmLK9-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-15" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="Получить период&lt;div&gt;для таймера&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="233" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-17" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.loop_limit;whiteSpace=wrap;direction=west;" value="Конец цикла" vertex="1">
+          <mxGeometry height="60" width="170" x="485.75" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-22" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.734;entryY=-0.025;entryDx=0;entryDy=0;entryPerimeter=0;" target="6OlS0HwxHVeLaS1nAZj1-1" value="">
+          <mxGeometry relative="1" x="-0.3333" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-19" parent="1" style="shape=parallelogram;html=1;strokeWidth=2;perimeter=parallelogramPerimeter;whiteSpace=wrap;rounded=1;arcSize=12;size=0.23;" value="Флаг останова" vertex="1">
+          <mxGeometry height="50" width="170" x="570" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="6OlS0HwxHVeLaS1nAZj1-24" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 6&lt;div&gt;Стоп&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="268" y="360" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
