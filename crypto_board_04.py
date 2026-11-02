@@ -206,6 +206,8 @@ def on_favourites():
     frame_rbtn.pack(fill="x", padx=10, pady=5)
     frame_modal_w = Frame(modal_window)
     frame_modal_w.pack(fill="x", padx=10, pady=5)
+    frame_chk = Frame(modal_window)
+    frame_chk.pack(fill="x", padx=10, pady=5)
     frame_buttons = Frame(modal_window)
     frame_buttons.pack(fill="x", padx=10, pady=5)
 
@@ -239,7 +241,7 @@ def on_favourites():
     lb.bind("<<ListboxSelect>>", on_select)
 
     chk_btn_var = BooleanVar(value=sel_ind_flag)
-    chk_btn = Checkbutton(frame_modal_w, text="Выделять избранное при\nпоследующем открытии окна", justify="left", anchor="w", variable=chk_btn_var,
+    chk_btn = Checkbutton(frame_chk, text="Выделять избранное при\nпоследующем открытии окна", justify="left", anchor="w", variable=chk_btn_var,
                           onvalue=True, offvalue=False, command=chk_btn_changed)
     chk_btn.pack(side=LEFT, padx=5)
 
