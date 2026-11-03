@@ -118,7 +118,7 @@
         <mxCell id="veJCd5lJ6lZnKGWxyipO-44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Сохранить строку запроса к серверу в файл" vertex="1">
           <mxGeometry height="50" width="130" x="225" y="880" as="geometry" />
         </mxCell>
-        <mxCell id="veJCd5lJ6lZnKGWxyipO-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Вызвать функцию обновления избранных монет&lt;div&gt;и перерисовать&lt;div&gt;главное окно&lt;/div&gt;&lt;/div&gt;&lt;div&gt;(Схема 3)&lt;/div&gt;" vertex="1">
+        <mxCell id="veJCd5lJ6lZnKGWxyipO-46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Вызвать функцию обновления избранных монет&lt;div&gt;и перерисовать&lt;div&gt;главное окно&lt;/div&gt;&lt;/div&gt;&lt;div&gt;(Схема 4)&lt;/div&gt;" vertex="1">
           <mxGeometry height="100" width="130" x="225" y="960" as="geometry" />
         </mxCell>
         <mxCell id="veJCd5lJ6lZnKGWxyipO-48" edge="1" parent="1" source="veJCd5lJ6lZnKGWxyipO-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="veJCd5lJ6lZnKGWxyipO-30">
