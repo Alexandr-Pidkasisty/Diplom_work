@@ -513,7 +513,7 @@ def on_menu_timer():
 """ Основной текст программы """
 
 
-MAIN_ICON = 'My_web_01.ico'                          # Имя файла с иконкой программы
+MAIN_ICON = 'data/pcryptoboard.ico'                  # Имя файла с иконкой программы
 TOTAL_COINS_FNAME ='data/total_coins.json'           # Имя файла с полным списком валют
 FAVOURITES_COINS_FNAME = 'data/indices_coins.json'   # Имя файла со справочником избранных валют
 FAVOURITES_ID_FNAME = 'data/favor_id.cfg'            # Имя файла с идентификаторами избранных валют
