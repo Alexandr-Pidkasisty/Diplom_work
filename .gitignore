@@ -3,10 +3,6 @@
 *.log
 build/
 bin/
-*.png
 readme.*
-dist/
-.spec
-data_coins
-cryptoboard/
-cryptoboard.spec
+working_materials/
+.vscode/
