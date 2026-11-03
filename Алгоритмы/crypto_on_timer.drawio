@@ -68,6 +68,18 @@
         <mxCell id="6OlS0HwxHVeLaS1nAZj1-24" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Схема 6&lt;div&gt;Стоп&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="100" x="268" y="360" as="geometry" />
         </mxCell>
+        <mxCell id="fTh4Gb-Ya04oqbzphNLh-4" edge="1" parent="1" source="fTh4Gb-Ya04oqbzphNLh-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;defaultLabelBackgroundColor=page;" target="fTh4Gb-Ya04oqbzphNLh-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fTh4Gb-Ya04oqbzphNLh-1" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.flowchart.parallel_mode;accentColor=#ffff00;pointerEvents=1;labelPerimeter=1;" value="" vertex="1">
+          <mxGeometry height="40" width="361" x="80" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="fTh4Gb-Ya04oqbzphNLh-2" edge="1" parent="1" source="6OlS0HwxHVeLaS1nAZj1-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;defaultLabelBackgroundColor=page;" target="fTh4Gb-Ya04oqbzphNLh-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fTh4Gb-Ya04oqbzphNLh-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Вызывать функцию обновления избранного&lt;div&gt;Схема 4&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="170" x="175.5" y="780" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
