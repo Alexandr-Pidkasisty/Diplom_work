@@ -55,7 +55,7 @@ def get_data():
     date_ = date.today().strftime("%d-%m-%Y")
     r = response(f"https://api.coingecko.com/api/v3/coins/{id}/history?date={date_}" + "&" + AUTH_KEY)
     ass_data = r.json()
-    image_link = f'{(ass_data["image"])["small"]}'
+    image_link = f'{(ass_data["image"])["thumb"]}'
     img = load_image(image_link)
     if img:
         l_image.configure(image=img)
