@@ -48,8 +48,14 @@ def cmb_names_on_select(event):
     get_data()
 
 
+def cmb_currency_on_select(event):
+    global currency
+    currency = cmb_currency_var.get()
+
+
 def get_data():
     # Получение данных и вывод информации на дашборд
+    global currency
     name = cmb_names_var.get()
     id = COINS[name]
     date_ = date.today().strftime("%d-%m-%Y")
@@ -63,7 +69,7 @@ def get_data():
     l_name.configure(text=ass_data["name"], font=FONT, width=len(ass_data["name"])+2)
     l_simbol.configure(text=ass_data["symbol"], font=FONT, width=len(ass_data["symbol"])+2)
     l_price.configure(text=f'${((ass_data["market_data"])["current_price"])["usd"]:.2f}', font=FONT, 
-                      width=len(f'{((ass_data["market_data"])["current_price"])["usd"]:.2f}')+3)
+                      width=len(f'{((ass_data["market_data"])["current_price"])[currency]:.2f}')+3)
 
 
 """ Основной текст программы """
@@ -74,6 +80,8 @@ MAIN_ICON = 'My_web_01.ico'                                 # Имя файла 
 COINS_NAME = ["Bitcoin", "Ethereum", "Tether", "BNB", "XRP", "USDC", "Solana", "TRON", "Figure Heloc", "Zcash"] 
 COINS = {"Bitcoin": "bitcoin", "Ethereum": "ethereum", "Tether": "tether", "BNB":"binancecoin", "XRP": "ripple",
          "USDC": "usd-coin", "Solana": "solana", "TRON": "tron", "Figure Heloc": "figure-heloc", "Zcash": "zcash"}
+CURRENCY = ["usd", "eur", "jpy", "rub", "uah", "btc", "eth"]
+currency = 'usd'
 
 FONT = ("Arial", 12)
 FONT1 = ("Arial", 10)
@@ -96,6 +104,11 @@ cmb_names_var = StringVar()
 cmb_names = ttk.Combobox(frame_root, textvariable=cmb_names_var, values=COINS_NAME, state="readonly")
 cmb_names.pack(side=LEFT)
 cmb_names.bind("<<ComboboxSelected>>", cmb_names_on_select)
+
+cmb_currency_var = StringVar()
+cmb_currency = ttk.Combobox(frame_root, textvariable=cmb_currency_var, values=CURRENCY, state="readonly")
+cmb_currency.pack(side=LEFT)
+cmb_currency.bind("<<ComboboxSelected>>", cmb_currency_on_select)
 
 # Вывод заголовков на дашборд
 frame_info.columnconfigure(3, weight=1)  # Столбец 3 будет растягиваться
