@@ -76,6 +76,7 @@ COINS = {"Bitcoin": "bitcoin", "Ethereum": "ethereum", "Tether": "tether", "BNB"
          "USDC": "usd-coin", "Solana": "solana", "TRON": "tron", "Figure Heloc": "figure-heloc", "Zcash": "zcash"}
 
 FONT = ("Arial", 12)
+FONT1 = ("Arial", 10)
 
 root = Tk()
 root.title("Курсы популярных криптовалют")
@@ -84,6 +85,8 @@ root.iconbitmap(MAIN_ICON)  # Задал иконку приложения
 
 frame_root = Frame(root)
 frame_root.pack(fill="x", padx=5, pady=5)
+separator = ttk.Separator(root, orient="horizontal")
+separator.pack(fill="x")
 frame_info = Frame(root)
 frame_info.pack(fill="x", padx=5, pady=5)
 
@@ -96,9 +99,9 @@ cmb_names.bind("<<ComboboxSelected>>", cmb_names_on_select)
 
 # Вывод заголовков на дашборд
 frame_info.columnconfigure(3, weight=1)  # Столбец 3 будет растягиваться
-Label(frame_info, text="Наименование").grid(row=0, column=1, padx=(5,0), pady=5, sticky ="w")
-Label(frame_info, text="Символ").grid(row=0, column=2, padx=(5,0), pady=5, sticky ="w")
-Label(frame_info, text="Стоимость").grid(row=0, column=3, padx=5, pady=5, sticky ="e")
+Label(frame_info, text="Наименование",font=FONT1).grid(row=0, column=1, padx=(5,0), pady=5, sticky ="w")
+Label(frame_info, text="Символ",font=FONT1).grid(row=0, column=2, padx=(5,0), pady=5, sticky ="w")
+Label(frame_info, text="Стоимость",font=FONT1).grid(row=0, column=3, padx=5, pady=5, sticky ="e")
 
 # Вывод информации на дашборд
 l_image = Label(frame_info, text="")
