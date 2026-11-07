@@ -71,7 +71,6 @@ def get_data():
 AUTH_KEY = 'x_cg_demo_api_key=CG-CzGaZZtQp9cyNQy8rsT1sJNo'  # Ключ аутентификации
 MAIN_ICON = 'My_web_01.ico'                                 # Имя файла с иконкой программы
 # Популярные криптовалюты
-COINS_NAME = ["Bitcoin", "Ethereum", "Tether", "BNB", "XRP", "USDC", "Solana", "TRON", "Figure Heloc", "Zcash"] 
 COINS = {"Bitcoin": "bitcoin", "Ethereum": "ethereum", "Tether": "tether", "BNB":"binancecoin", "XRP": "ripple",
          "USDC": "usd-coin", "Solana": "solana", "TRON": "tron", "Figure Heloc": "figure-heloc", "Zcash": "zcash"}
 
@@ -93,7 +92,7 @@ frame_info.pack(fill="x", padx=5, pady=5)
 Label(frame_root, text='Выберите криптовалюту').pack(side=LEFT, padx=5, pady=5)
 
 cmb_names_var = StringVar()
-cmb_names = ttk.Combobox(frame_root, textvariable=cmb_names_var, values=COINS_NAME, state="readonly")
+cmb_names = ttk.Combobox(frame_root, textvariable=cmb_names_var, values=list(COINS.keys()), state="readonly")
 cmb_names.pack(side=LEFT)
 cmb_names.bind("<<ComboboxSelected>>", cmb_names_on_select)
 
@@ -117,7 +116,7 @@ l_price = Label(frame_info, text="", compound=LEFT, width=25,
 l_price.grid(row=1, column=3, padx=5, pady=5, sticky ="e")
 
 # Выбор криптовалюты по умолчанию и ее отображение
-cmb_names_var.set(COINS_NAME[0])
+cmb_names_var.set((list(COINS.keys()))[0])
 get_data()
 
 root.mainloop()
