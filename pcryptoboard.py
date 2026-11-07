@@ -353,7 +353,7 @@ def update_guide_dialog():
     progress_window.bind('<<Event_close_window>>', progress_window_quit)
 
     # Запускаем поток
-    thrd = threading.Thread(target=worker_in_thread, args=(progress_window, q, progress_bar, label))
+    thrd = threading.Thread(target=worker_in_thread, args=(progress_window, q))
 
     # Запускаем функцию через 100 миллисекунд после создания окна
     progress_window.after(100, lambda : thrd.start())
@@ -364,7 +364,7 @@ def update_guide_dialog():
 # update_guide_dialog
 
 
-def worker_in_thread(win, q, pb, lb):
+def worker_in_thread(win, q):
     # Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     # индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
     # очередь для обмена данными.
