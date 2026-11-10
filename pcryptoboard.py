@@ -419,10 +419,14 @@ def worker_in_thread(win, q):
 
 def on_update(event, q, pb, lb):
     """ Функция для обработки события обновления окна индикатора прогресса (событие <<Updated>>) """
-    tmp = q.get()
-    pb['value'] = tmp[0]
-    pb['maximum'] = tmp[1]
-    lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")
+    try:
+        tmp = q.get()           # Забираем элемент из очереди
+        q.task_done()           # Сообщаем очереди, что элемент обработан
+        pb['value'] = tmp[0]    # Передаем данные индикатору прогресса
+        pb['maximum'] = tmp[1]
+        lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")    # Обновляем текст индикатора
+    except queue.Empty:         # Если очередь пуста, то
+        pass                    # ничего не делаем
 # on_update
 
 
