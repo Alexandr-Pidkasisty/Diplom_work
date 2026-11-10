@@ -297,7 +297,6 @@ def on_favourites():
     
     # Обновляем избранные валюты и перерисовывам главное окно
     update_favor()
-
 # def on_favourites
     
 
@@ -489,24 +488,14 @@ def on_timer(period):
      (параметр period), функция генерирует событие <<event_time>> """
     global dem_th
 
-    def interruptible_sleep(secs):
-        """ Функция сна, стостоящая из коротких периодов для оперативного реагирования на сигнал останова """
-        start_time = time.time()    # Определяем текущее время
-        # Если период меньше заданного и не установлен флаг останова
-        while (time.time() - start_time < secs) and (not d_stop_event.is_set()):  
-            time.sleep(0.1)         # Засыпаем на короткий промежуток времени
-        
     def worker():
         """ Таймер для работы в фоновом потоке """
         nonlocal period
         while not d_stop_event.is_set():  # Выполняет цикл, пока не установлен флаг останова
-            # Получаем текущее время и преобразовываем его в int
-            dt = datetime.now()
-            timestamp = int(dt.timestamp())  # Целое число секунд
-            # Отправляем событие в главный поток
-            root.event_generate("<<event_time>>", when='tail', state=timestamp)
-            # Задержка перед следующим обновлением
-            interruptible_sleep(period)
+            root.event_generate("<<event_time>>", when='tail')
+            # Задержка перед следующим обновлением на period сек.
+            d_stop_event.wait(period)
+            
     # Запускаем поток
     dem_th = threading.Thread(target=worker, daemon=True)
     dem_th.start()
