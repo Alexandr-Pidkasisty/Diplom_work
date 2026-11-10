@@ -11,13 +11,31 @@ import time
 import queue
 import threading
 
+def check(widget):
+    """ Метод асинхронного ожидания завершения работы потока. Параметры: widget - окно Tk или Toplevel.
+     Используется вместо синхронного join(), чтобы не блокировать главный поток.  """
+    global thrd
+    if thrd and thrd.is_alive():    # Если переменная указывает на поток и поток запущен и еще не завершился
+        widget.after(100, lambda wdg=widget: check(wdg))    # то делаем эту же проверку еще раз через 100 мсек
+    else:                           # В противном случае (если поток завершен)
+        stop_event.clear()          # сбрасываем флаг останова потока
+        thrd = None                 # устанавливаем переменную в None
+        widget.destroy()            # Закрываем окно
+#check
 
-def quit(event = None):
+
+def quit(event=None):
     """ Функция корректного завершения работы программы """
-    if thrd:                # Если запущен поток, то
-        stop_event.set()    # устанавливаем флаг останова потока
-        thrd.join()         # ожидаем окончания работы потока
-    root.destroy()          # Закрываем главное окно и завершаем работу программы
+    global thrd
+    if thrd and thrd.is_alive():        # Если переменная указывает на поток и поток запущен и еще не завершился
+        stop_event.set()                # устанавливаем флаг останова потока
+        # отключаем повторные клики
+        root.protocol("WM_DELETE_WINDOW", lambda: None)
+        # проверяем каждые 100 мс, не завершился ли поток
+        root.after(100, lambda wdg=root: check(wdg))
+    else:                               # В противном случае (если поток завершен)
+        root.destroy()                  # Закрываем главное окно и завершаем работу программы
+# quit
 
 
 def hide_menu(event):
@@ -314,15 +332,20 @@ def update_guide_dialog():
     global thrd
 
     def progress_window_quit(event=None):
-        """ Функция корректного закрытия окна индикатора прогресса """
-        global stop_event, thrd
-        nonlocal progress_window 
-        if thrd:                    # Если запущен поток, то
-            stop_event.set()        # устанавливаем флаг останова потока в True,
-            thrd.join()             # ожидаем окончания работы потока,
-            stop_event.clear()      # устанавливаем флаг останова потока в False,
-            thrd = None             # и устанавливаем указатель в None
-        progress_window.destroy()   # Закрываем окно индикатора прогресса и завершаем работу программы
+        """ Функция корректного завершения работы и закрытия окна индикатора прогресса """
+        global thrd
+        if thrd and thrd.is_alive():                # Если переменная указывает на поток и поток запущен и еще не завершился
+            stop_event.set()                        # устанавливаем флаг останова потока
+            # отключаем повторные клики
+            progress_window.protocol("WM_DELETE_WINDOW", lambda: None)
+            # проверяем каждые 100 мс, не завершился ли поток
+            progress_window.after(100, lambda wdg=progress_window: check(wdg))
+            update_menu.entryconfig("Справочник монет", state="normal") # Делаем пункт меню активным
+        else:                                       # В противном случае (если поток завершен)
+            stop_event.clear()                      # сбрасываем флаг останова потока
+            thrd = None                             # устанавливаем переменную в None
+            progress_window.destroy()               # Закрываем окно индикатора прогресса
+            update_menu.entryconfig("Справочник монет", state="normal") # Делаем пункт меню активным
 
     # Диалог для запуска процедуры обновления справочника валют
     if not mb.askokcancel("Подтверждение", "Операция может занять много времени.\nВы уверены, что хотите начать обновление?"):
@@ -372,47 +395,54 @@ def worker_in_thread(win, q):
     """  Функция для выполнения в потоке. Параметры: win - ссылка на окно с индикатором прогресса, pb - ссылка на виджет
     индикатора прогресса, lb - ссылка на метку для вывода цифровых значений индикатора прогресса, q - ссылка на
     очередь для обмена данными. """
-    if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
-        return
-    r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
-    if r == None:
-        return
+    if stop_event.is_set():                         # Если установлен флаг останова потока,
+        return                                      # то завершаем функцию
+    r = response(REQUEST_TOTAL_COINS, params={"start":0, "limit":100}, timeout=(5, 10)) # Делаем запрос к сайту по валютам
+    if stop_event.is_set() or r is None:            # Если установлен флаг останова или запрос неудачен,
+        return                                      # то завершаем работу функции
     ass_data = r.json()["data"]                     # Получаем данные о монетах
     ass_info = r.json()["info"]["coins_num"]        # Получаем количество монет
-    
+        
     count = ass_info // 100                         # Получаем число полных запросов (по 100 монет)
     rest = ass_info % 100                           # Получаем число монет в последнем запросе
     max_count = count if rest == 0 else count + 1   # Вычисляем maximum для ProgressBar
-    q.put((1, max_count))
-    # Генерируем событие для обновления виджета
-    win.event_generate('<<Updated>>', when='tail')
-    time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
-
-    for i in range(1, count):
-        if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
-            return
-        r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(10, 30)) # Делаем запрос к сайту по валютам
-        tmp_ass = r.json()["data"]
-        ass_data = ass_data + tmp_ass
-        q.put((i + 1, max_count))
-        win.event_generate('<<Updated>>', when='tail')
-        time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
-
-    if stop_event.is_set():  # Если установлен флаг останова потока, то завершаем функцию
+    q.put((1, max_count))                           # Кладем в очередь информацию для обработки индикатором прогресса
+    win.event_generate('<<Updated>>', when='tail')  # и генерируем событие для обновления виджета
+    # time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
+    if stop_event.wait(2):   # Задержка 2 сек., чтобы не перегужать сервер или до установки флага останова потока
         return
-    if rest != 0:
-        r = response(REQUEST_TOTAL_COINS, params={"start":count * 100, "limit":rest}, timeout=(10, 30))
-        tmp_ass = r.json()["data"]
-        ass_data = ass_data + tmp_ass
-        q.put((max_count, max_count))
-        win.event_generate('<<Updated>>', when='tail')
-
+        
+    for i in range(1, count):                       # Делаем в цикле полные запросы
+        if stop_event.is_set():                     # Если установлен флаг останова потока, то завершаем функцию
+            return
+        r = response(REQUEST_TOTAL_COINS, params={"start":i * 100, "limit":100}, timeout=(5, 10)) # Делаем запрос к сайту по валютам
+        if stop_event.is_set() or r is None:        # Если установлен флаг останова или запрос неудачен,
+            return                                  # то завершаем работу функции
+        tmp_ass = r.json()["data"]                  # Получаем данные о монетах
+        ass_data = ass_data + tmp_ass               # Добавляем данные в конец ранее созданного списка
+        q.put((i + 1, max_count))                   # Кладем в очередь информацию для обработки индикатором прогресса
+        win.event_generate('<<Updated>>', when='tail')  # и генерируем событие для обновления виджета
+        # time.sleep(2)  # Задержка 2 сек., чтобы не перегужать сервер
+        if stop_event.wait(2):   # Задержка 2 сек., чтобы не перегужать сервер или до установки флага останова потока
+            return
+        
+    if stop_event.is_set():                         # Если установлен флаг останова потока,
+        return                                      # то завершаем функцию
+    if rest != 0:                                   # Если последний запрос не нулевой, то
+        r = response(REQUEST_TOTAL_COINS, params={"start":count * 100, "limit":rest}, timeout=(5, 10)) # Делаем запрос к сайту
+        if stop_event.is_set() or r is None:        # Если установлен флаг останова или запрос неудачен,
+            return                                  # то завершаем работу функции
+        tmp_ass = r.json()["data"]                  # Получаем данные о монетах
+        ass_data = ass_data + tmp_ass               # Добавляем данные в конец ранее созданного списка
+        q.put((max_count, max_count))               # Кладем в очередь информацию для обработки индикатором прогресса
+        win.event_generate('<<Updated>>', when='tail')  # и генерируем событие для обновления виджета
+    
     # Сортировка по имени
     sorted_ass = sorted(ass_data, key=lambda x: x["name"])
-
+    
     # Сохраняем в файл, чтобы не делать запросы слишком часто
     save_json_safely(sorted_ass, TOTAL_COINS_FNAME)
-
+    
     # Генерируем событие для закрытия окна с индикатором прогресса
     win.event_generate('<<Event_close_window>>', when='tail')
 # worker_in_thread
@@ -420,13 +450,14 @@ def worker_in_thread(win, q):
 def on_update(event, q, pb, lb):
     """ Функция для обработки события обновления окна индикатора прогресса (событие <<Updated>>) """
     try:
-        tmp = q.get()           # Забираем элемент из очереди
-        q.task_done()           # Сообщаем очереди, что элемент обработан
-        pb['value'] = tmp[0]    # Передаем данные индикатору прогресса
-        pb['maximum'] = tmp[1]
-        lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")    # Обновляем текст индикатора
-    except queue.Empty:         # Если очередь пуста, то
-        pass                    # ничего не делаем
+        tmp = q.get()                               # Забираем элемент из очереди
+        if pb.winfo_exists() and lb.winfo_exists(): # Если виджеты существуют (не уничтожены),
+            pb['value'] = tmp[0]                    # то передаем данные индикатору прогресса
+            pb['maximum'] = tmp[1]
+            lb.config(text=f"Загрузка {tmp[0]} из {tmp[1]}")    # и обновляем текст индикатора
+        q.task_done()                               # Сообщаем очереди, что элемент обработан
+    except queue.Empty:                             # Если очередь пуста, то
+        pass                                        # ничего не делаем
 # on_update
 
 
